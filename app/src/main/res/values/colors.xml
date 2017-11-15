@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common -->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#CC000000</color>
+
+    <!-- Theme - Dark Blue -->
+    <color name="mp.theme.dark_blue.background">#FFFFFF</color>
+    <color name="mp.theme.dark_blue.gradientColor">#FFFFFFFF</color>
+    <!-- -->
+    <color name="mp.theme.dark_blue.colorControlActivated">#CC000000</color>
+    <color name="mp.theme.dark_blue.colorControlHighlight">#AACCCCCC</color>
+
+    <color name="mp.theme.dark_blue.colorPrimary">#ffffff</color>
+    <color name="mp.theme.dark_blue.colorPrimaryDark">#ffffff</color>
+    <color name="mp.theme.dark_blue.colorAccent">#CC000000</color>
+    <color name="mp.theme.dark_blue.textColorPrimary">#CC000000</color>
+    <color name="mp.theme.dark_blue.textColorSecondary">#ffffff</color>
+
+    <color name="mp.theme.dark_blue.actionMode.statusBarColor">#CC000000</color>
+    <color name="mp.theme.dark_blue.actionMode.background">#ffffff</color>
+
+    <color name="mp.line">#1A000000</color>
+    <color name="mp.list.background">#1Affffff</color>
+    <color name="mp.list.background.selected">#cccccccc</color>
+    <color name="mp.list.scrollThumb">#CC00ccff</color>
+    <color name="mp.list.text.title">#CCffffff</color>
+    <color name="mp.list.text.title.selected">#ffffff</color>
+    <color name="mp.list.text.hint">#CC000000</color>
+    <color name="mp.list.text.hint.selected">#7C000000</color>
+
+    <color name="mp.popupMenu.background">#CC000000</color>
+
+    <color name="mp.text.hint">#FFFFFF</color>
+
+    <!-- Segmented Control -->
+    <color name="mp.widget.segmented.default">?attr/colorAccent</color>
+    <color name="mp.widget.segmented.checked">#CC000000</color>
+
+    <!-- CharacterView -->
+    <color name="mp.characterView.background">#CC11cc11</color>
+    <color name="mp.characterView.textColor">@color/mp.list.text.title</color>
+    <color name="colorAccent">#CC000000</color>
+</resources>
