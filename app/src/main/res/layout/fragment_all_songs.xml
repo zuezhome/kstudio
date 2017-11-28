@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/transparent"
     >
 
     <android.support.v7.widget.RecyclerView
@@ -16,46 +16,46 @@
         android:clipToPadding="false"
         recyclerView:layoutManager="@string/mp.list.layoutManager.linear"
         tools:listitem="@layout/item_local_music"
-        android:background="@color/white"
+        android:background="@color/transparent"
         />
 
-    <!--<com.musicplayer.aow.ui.widget.RecyclerViewFastScroller-->
-        <!--android:id="@+id/fast_scroller"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:paddingTop="@dimen/mp.padding.large"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:visibility="gone"-->
-        <!--tools:visibility="visible"-->
-        <!--android:background="@color/white"-->
-        <!--&gt;-->
+    <com.musicplayer.aow.ui.widget.RecyclerViewFastScroller
+        android:id="@+id/fast_scroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/mp.padding.large"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/white"
+        >
 
-        <!--<TextView-->
-            <!--android:id="@+id/bubble"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:minWidth="56dp"-->
-            <!--android:minHeight="56dp"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_marginRight="@dimen/mp.padding.large"-->
-            <!--android:layout_marginEnd="@dimen/mp.padding.large"-->
-            <!--android:padding="@dimen/mp.padding.normal"-->
-            <!--android:background="@drawable/fast_scroller_bubble"-->
-            <!--android:textColor="?attr/colorAccent"-->
-            <!--android:textSize="20sp"-->
-            <!--tools:text="A"-->
-            <!--/>-->
+        <TextView
+            android:id="@+id/bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="56dp"
+            android:minHeight="56dp"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/mp.padding.large"
+            android:layout_marginEnd="@dimen/mp.padding.large"
+            android:padding="@dimen/mp.padding.normal"
+            android:background="@drawable/fast_scroller_bubble"
+            android:textColor="?attr/colorAccent"
+            android:textSize="20sp"
+            tools:text="A"
+            />
 
-        <!--<android.support.v7.widget.AppCompatImageView-->
-            <!--xmlns:appCompat="http://schemas.android.com/apk/res-auto"-->
-            <!--android:id="@+id/handle"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingLeft="@dimen/mp.padding.small"-->
-            <!--android:paddingStart="@dimen/mp.padding.small"-->
-            <!--appCompat:srcCompat="@drawable/fast_scroller_indicator"-->
-            <!--tools:ignore="RtlSymmetry"/>-->
-    <!--</com.musicplayer.aow.ui.widget.RecyclerViewFastScroller>-->
+        <android.support.v7.widget.AppCompatImageView
+            xmlns:appCompat="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/mp.padding.small"
+            android:paddingStart="@dimen/mp.padding.small"
+            appCompat:srcCompat="@drawable/fast_scroller_indicator"
+            tools:ignore="RtlSymmetry"/>
+    </com.musicplayer.aow.ui.widget.RecyclerViewFastScroller>
 
 </RelativeLayout>

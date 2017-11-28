@@ -6,10 +6,10 @@ import com.musicplayer.aow.player.PlayMode
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/10/16
- * Time: 11:05 PM
- * Desc: PreferenceManager
+ * User:
+ * Date:
+ * Time:
+ * Desc: AppContract
  */
 object PreferenceManager {
 

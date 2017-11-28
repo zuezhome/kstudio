@@ -1,0 +1,13 @@
+Glide save bitmap
+try {
+    theBitmap = Glide.
+        with(SomeActivity.this).
+        load("https://www.google.es/images/srpr/logo11w.png").
+        asBitmap().
+        into(-1,-1).
+        get();
+ } catch (final ExecutionException e) {
+     Log.e(TAG, e.getMessage());
+ } catch (final InterruptedException e) {
+     Log.e(TAG, e.getMessage());
+ }

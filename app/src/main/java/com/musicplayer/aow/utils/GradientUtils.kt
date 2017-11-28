@@ -4,13 +4,6 @@ import android.graphics.drawable.GradientDrawable
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/1/16
- * Time: 10:13 PM
- * Desc: GradientUtils
- */
 object GradientUtils {
 
     fun create(@ColorInt startColor: Int, @ColorInt endColor: Int, radius: Int,

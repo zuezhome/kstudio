@@ -15,12 +15,12 @@
                 android:translateY="11.000000">
                 <path
                     android:name="Bounds"
-                    android:fillColor="#000000"
+                    android:fillColor="#FFFFFFFF"
                     android:fillAlpha="0.12"
                     android:pathData="M 12 0 C 18.627416998 0 24 5.37258300203 24 12 C 24 18.627416998 18.627416998 24 12 24 C 5.37258300203 24 0 18.627416998 0 12 C 0 5.37258300203 5.37258300203 0 12 0 Z"/>
                 <path
                     android:name="Shape"
-                    android:fillColor="#000000"
+                    android:fillColor="#FFFFFFFF"
                     android:pathData="M19.8623112,11.2535396 C19.8623112,11.2535396 19.5718083,11.1442885
 18.7313626,11.0667565 C17.7037276,10.9717556 17.3937245,10.5865956
 17.0519087,10.1070909 L17.0450336,10.1070909 C17.0024707,9.99312103

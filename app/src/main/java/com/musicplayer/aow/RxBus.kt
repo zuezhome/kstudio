@@ -62,7 +62,7 @@ class RxBus {
         fun defaultSubscriber(): Subscriber<Any> {
             return object : Subscriber<Any>() {
                 override fun onCompleted() {
-                    Log.d(TAG, "Duty off!!!")
+                    Log.e(TAG, "Duty off!!!")
                 }
 
                 override fun onError(e: Throwable) {
@@ -70,7 +70,7 @@ class RxBus {
                 }
 
                 override fun onNext(o: Any) {
-                    Log.d(TAG, "New event received: " + o)
+                    Log.e(TAG, "New event received: " + o)
                 }
             }
         }

@@ -15,7 +15,7 @@
                 android:translateY="11.000000">
                 <path
                     android:name="Shape"
-                    android:fillColor="#000000"
+                    android:fillColor="#FFFFFF"
                     android:fillAlpha="0.40"
                     android:pathData="M17.8333333,7.16666667 L13.1666667,7.16666667 L12,6 L8.5,6 C7.85566779,6
 7.33333333,6.52233446 7.33333333,7.16666667 L7.33333333,14.1666667

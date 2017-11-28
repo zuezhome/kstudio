@@ -6,9 +6,9 @@ import rx.Observable
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/10/16
- * Time: 4:52 PM
+ * User:
+ * Date:
+ * Time:
  * Desc: AppContract
  */
 /* package */ internal interface AppContract {

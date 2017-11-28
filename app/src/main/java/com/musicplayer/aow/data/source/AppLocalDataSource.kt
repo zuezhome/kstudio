@@ -14,10 +14,10 @@ import java.util.Date
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/10/16
- * Time: 4:54 PM
- * Desc: AppLocalDataSource
+ * User:
+ * Date:
+ * Time:
+ * Desc: AppContract
  */
 /* package */ internal class AppLocalDataSource(private val mContext: Context?, private val mLiteOrm: LiteOrm?) : AppContract {
 

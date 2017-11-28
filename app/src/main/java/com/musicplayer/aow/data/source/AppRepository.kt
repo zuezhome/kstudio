@@ -4,28 +4,21 @@ import com.musicplayer.aow.Injection
 import com.musicplayer.aow.data.model.*
 import com.musicplayer.aow.data.source.db.LiteOrmHelper
 import rx.Observable
+import rx.functions.Action1
 
 import java.util.ArrayList
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/10/16
- * Time: 4:17 PM
- * Desc: AppRepository
- */
-abstract class AppRepository private constructor() : AppContract {
+class AppRepository private constructor() : AppContract {
 
     private val mLocalDataSource: AppLocalDataSource
 
-    private var mCachedPlayLists: MutableList<PlayList>? = null
+    private var mCachedPlayLists: List<PlayList>? = null
 
     init {
         mLocalDataSource = AppLocalDataSource(Injection.provideContext(), LiteOrmHelper.instance)
     }
 
     // Play List
-
     override fun playLists(): Observable<MutableList<PlayList>> {
         return mLocalDataSource.playLists()
                 .doOnNext { playLists -> mCachedPlayLists = playLists }
@@ -34,7 +27,7 @@ abstract class AppRepository private constructor() : AppContract {
     override fun cachedPlayLists(): MutableList<PlayList> {
         return if (mCachedPlayLists == null) {
             ArrayList(0)
-        } else mCachedPlayLists!!
+        } else mCachedPlayLists as MutableList<PlayList>
     }
 
     override fun create(playList: PlayList): Observable<PlayList> {
@@ -90,11 +83,14 @@ abstract class AppRepository private constructor() : AppContract {
         val instance: AppRepository?
             get() {
                 if (sInstance == null) {
-//                    synchronized(AppRepository::class.java) {
-                        if (sInstance == null) sInstance = AppRepository.instance
-//                    }
+                    synchronized(AppRepository::class.java) {
+                        if (sInstance == null) {
+                            sInstance = AppRepository()
+                        }
+                    }
                 }
                 return sInstance
             }
     }
 }
+

@@ -6,14 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.musicplayer.aow.data.model.Song
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 7/11/16
- * Time: 11:45 AM
- * Desc: ListAdapter
- */
-abstract class ListAdapter<T, V : IAdapterView<*>>(private val mContext: Context, private var mData: MutableList<Song>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+abstract class ListAdapter<T, V : IAdapterView<*>>(private val mContext: Context, private var mData: MutableList<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var itemClickListener: OnItemClickListener? = null
         private set
@@ -22,7 +16,7 @@ abstract class ListAdapter<T, V : IAdapterView<*>>(private val mContext: Context
     var lastItemClickPosition = RecyclerView.NO_POSITION
         private set
 
-    var data: MutableList<Song>
+    var data: MutableList<Any>
         get() = mData
         set(data) {
             mData = data
@@ -73,7 +67,7 @@ abstract class ListAdapter<T, V : IAdapterView<*>>(private val mContext: Context
         mData!!.addAll(data)
     }
 
-    open fun getItem(position: Int): Song {
+    open fun getItem(position: Int): Any {
         return mData!![position]
     }
 
@@ -90,4 +84,3 @@ abstract class ListAdapter<T, V : IAdapterView<*>>(private val mContext: Context
         itemLongClickListener = listener
     }
 }
-

@@ -1,6 +1,7 @@
 package com.musicplayer.aow
 
 import android.app.Application
+import shortbread.Shortbread
 
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -17,7 +18,6 @@ class MusicPlayerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-
         instance = this
 
         // Custom fonts
@@ -31,7 +31,6 @@ class MusicPlayerApplication : Application() {
     }
 
     companion object {
-
         var instance: MusicPlayerApplication? = null
             private set
     }

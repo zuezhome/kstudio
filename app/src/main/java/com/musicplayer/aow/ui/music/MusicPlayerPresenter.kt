@@ -5,25 +5,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import com.musicplayer.aow.player.PlaybackService
 import com.musicplayer.aow.RxBus
 import com.musicplayer.aow.data.model.Song
 import com.musicplayer.aow.data.source.AppRepository
 import com.musicplayer.aow.data.source.PreferenceManager
 import com.musicplayer.aow.event.FavoriteChangeEvent
-import com.musicplayer.aow.player.PlaybackService
+import com.musicplayer.aow.player.PlayMode
 import rx.Subscriber
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/12/16
- * Time: 8:30 AM
- * Desc: MusicPlayerPresenter
- */
-class MusicPlayerPresenter(private var mContext: Context?, private var mView: MusicPlayerContract.View?) : MusicPlayerContract.Presenter {
+
+class MusicPlayerPresenter(private var mContext: Context?, private val mRepository: AppRepository, private var mView: MusicPlayerContract.View?) : MusicPlayerContract.Presenter {
     private val mSubscriptions: CompositeSubscription
 
     private var mPlaybackService: PlaybackService? = null
@@ -38,7 +34,9 @@ class MusicPlayerPresenter(private var mContext: Context?, private var mView: Mu
             // cast its IBinder to a concrete class and directly access it.
             mPlaybackService = (service as PlaybackService.LocalBinder).service
             mView!!.onPlaybackServiceBound(mPlaybackService!!)
-            mView!!.onSongUpdated(mPlaybackService!!.playingSong)
+            if (mPlaybackService!!.playingSong != null) {
+                mView!!.onSongUpdated(mPlaybackService!!.playingSong)
+            }
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
@@ -82,26 +80,26 @@ class MusicPlayerPresenter(private var mContext: Context?, private var mView: Mu
         mView!!.updatePlayMode(lastPlayMode)
     }
 
-//    override fun setSongAsFavorite(song: Song, favorite: Boolean) {
-//        val subscription = mRepository.setSongAsFavorite(song, favorite)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Subscriber<Song>() {
-//                    override fun onCompleted() {
-//                        // Empty
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        mView!!.handleError(e)
-//                    }
-//
-//                    override fun onNext(song: Song) {
-//                        mView!!.onSongSetAsFavorite(song)
-//                        RxBus.instance?.post(FavoriteChangeEvent(song))
-//                    }
-//                })
-//        mSubscriptions.add(subscription)
-//    }
+    override fun setSongAsFavorite(song: Song, favorite: Boolean) {
+        val subscription = mRepository.setSongAsFavorite(song, favorite)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<Song>() {
+                    override fun onCompleted() {
+                        // Empty
+                    }
+
+                    override fun onError(e: Throwable) {
+                        mView!!.handleError(e)
+                    }
+
+                    override fun onNext(song: Song) {
+                        mView!!.onSongSetAsFavorite(song)
+                        RxBus.instance?.post(FavoriteChangeEvent(song))
+                    }
+                })
+        mSubscriptions.add(subscription)
+    }
 
     override fun bindPlaybackService() {
         // Establish a connection with the service.  We use an explicit

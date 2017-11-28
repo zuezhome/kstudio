@@ -2,6 +2,7 @@ package com.musicplayer.aow.utils
 
 import android.graphics.*
 import android.graphics.BitmapFactory.decodeByteArray
+import android.graphics.BitmapFactory.decodeFile
 import android.media.MediaMetadataRetriever
 import android.util.Log
 
@@ -10,20 +11,12 @@ import com.musicplayer.aow.data.model.Song
 
 import java.io.File
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/14/16
- * Time: 8:42 PM
- * Desc: BitmapUtils
- * TODO To be optimized
- */
 object AlbumUtils {
 
     private val TAG = "AlbumUtils"
 
     fun parseAlbum(song: String): Bitmap? {
-        return parseAlbum(File(song!!))
+        return parseAlbum(File(song))
     }
 
     fun parseAlbum(song: Song): Bitmap? {
@@ -36,12 +29,12 @@ object AlbumUtils {
             metadataRetriever.setDataSource(file.absolutePath)
             val albumData = metadataRetriever.embeddedPicture
             if (albumData != null) {
-                return decodeByteArray(albumData, 0, albumData.size)
+//                return decodeByteArray(albumData, 0, albumData.size)
+                return null
             } else {
                 return null
             }
         } catch (e: IllegalArgumentException) {
-//            Log.e(TAG, "parseAlbum: ", e)
             return null
         }
     }

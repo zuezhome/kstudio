@@ -107,8 +107,7 @@ class CharacterDrawable private constructor()// Avoid direct instantiate
         @Dimension
         private var mCharacterPadding: Float = 0.toFloat()
 
-        fun applyStyle(style: Int): Builder {
-
+        fun applyStyle(): Builder {
             return this
         }
 

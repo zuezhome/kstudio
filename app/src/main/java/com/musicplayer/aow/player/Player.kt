@@ -11,12 +11,12 @@ import java.util.ArrayList
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/5/16
- * Time: 5:57 PM
+ * User:
+ * Date:
+ * Time:
  * Desc: Player
  */
-class Player : IPlayback, MediaPlayer.OnCompletionListener {
+class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener {
 
     private var mPlayer: MediaPlayer? = null
 
@@ -27,58 +27,19 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
     // Player status
     private var isPaused: Boolean = false
 
-    val audioSessionId: Int
-        get() = mPlayer!!.audioSessionId
-
     override val isPlaying: Boolean
         get() = mPlayer!!.isPlaying
 
     override val progress: Int
         get() = mPlayer!!.currentPosition
 
-    override val playingSong: Song
-        get() = mPlayList!!.currentSong!!
+    override val playingSong: Song?
+        get() = mPlayList!!.currentSong
 
     init {
         mPlayer = MediaPlayer()
         mPlayList = PlayList()
         mPlayer!!.setOnCompletionListener(this)
-    }
-
-    //to set the MediaPlayer to Streaming mode
-    fun setStreamType() {
-        mPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
-    }
-
-    //to Prepare media player for stream
-    fun prepare() {
-        try {
-            mPlayer!!.prepare()
-        } catch (e: IOException) {
-            //
-        }
-
-    }
-
-    //to start streaming
-    fun start() {
-        mPlayer!!.start()
-    }
-
-    //to reset mediaplayer
-    fun reset() {
-        mPlayer!!.reset()
-    }
-
-    //to get data source from url
-    fun setDataSource(strings: Array<String>) = try {
-        mPlayer!!.setDataSource(strings[0])
-    } catch (e: IOException) {
-        //
-    }
-
-    fun setStreamTypeNormal() {
-        mPlayer!!.setAudioStreamType(0)
     }
 
     override fun setPlayList(list: PlayList) {
@@ -99,7 +60,7 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
             val song = mPlayList!!.currentSong
             try {
                 mPlayer!!.reset()
-                mPlayer!!.setDataSource(song!!.path)
+                mPlayer!!.setDataSource(song.path)
                 mPlayer!!.prepare()
                 mPlayer!!.start()
                 notifyPlayStatusChanged(true)
@@ -133,9 +94,10 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
 
     override fun play(song: Song): Boolean {
         if (song == null) return false
+
         isPaused = false
-        mPlayList!!.getSongs()?.clear()
-        mPlayList!!.getSongs()?.add(song)
+        mPlayList!!.songs.clear()
+        mPlayList!!.songs.add(song)
         return play()
     }
 
@@ -174,7 +136,7 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
     }
 
     override fun seekTo(progress: Int): Boolean {
-        if (mPlayList!!.getSongs()?.isEmpty()!!) return false
+        if (mPlayList!!.songs.isEmpty()) return false
 
         val currentSong = mPlayList!!.currentSong
         if (currentSong != null) {
@@ -197,10 +159,10 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
     override fun onCompletion(mp: MediaPlayer?) {
         var next: Song? = null
         // There is only one limited play mode which is list, player should be stopped when hitting the list end
-        if (mPlayList!!.playMode == PlayMode.LIST && mPlayList!!.playingIndex == mPlayList!!.numOfSongs - 1) {
+        if (mPlayList!!.playMode === PlayMode.LIST && mPlayList!!.playingIndex === mPlayList!!.numOfSongs - 1) {
             // In the end of the list
             // Do nothing, just deliver the callback
-        } else if (mPlayList!!.playMode == PlayMode.SINGLE) {
+        } else if (mPlayList!!.playMode === PlayMode.SINGLE) {
             next = mPlayList!!.currentSong
             play()
         } else {
@@ -218,7 +180,7 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
         mPlayer!!.reset()
         mPlayer!!.release()
         mPlayer = null
-//        sInstance = null
+        sInstance = null
     }
 
     // Callbacks
@@ -263,18 +225,18 @@ class Player : IPlayback, MediaPlayer.OnCompletionListener {
 
         private val TAG = "Player"
 
-//        @Volatile private var sInstance: Player? = null
+        @Volatile private var sInstance: Player? = null
 
-//        val instance: Player?
-//            get() {
-//                if (sInstance == null) {
-//                    synchronized(Player::class.java) {
-//                        if (sInstance == null) {
-//                            sInstance = Player.instance
-//                        }
-//                    }
-//                }
-//                return sInstance
-//            }
+        val instance: Player?
+            get() {
+                if (sInstance == null) {
+                    synchronized(Player.Companion) {
+                        if (sInstance == null) {
+                            sInstance = Player()
+                        }
+                    }
+                }
+                return sInstance
+            }
     }
 }

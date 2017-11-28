@@ -10,6 +10,7 @@ import android.os.Vibrator
 import com.musicplayer.aow.R
 
 import com.musicplayer.aow.ui.main.MainActivity
+import shortbread.Shortbread
 
 import java.io.IOException
 
@@ -22,6 +23,8 @@ class SplashScreen : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        Shortbread.create(this);
 
         Handler().postDelayed(/*
              * Showing splash screen with a timer. This will be useful when you

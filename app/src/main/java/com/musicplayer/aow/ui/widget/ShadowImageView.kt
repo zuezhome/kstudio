@@ -15,11 +15,8 @@ import android.widget.ImageView
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/8/16
- * Time: 4:23 PM
  * Desc: ShadowImageView
- * Stole from [android.support.v4.widget.SwipeRefreshLayout]'s implementation to display beautiful shadow
+ * from [android.support.v4.widget.SwipeRefreshLayout]'s implementation to display beautiful shadow
  * for circle ImageView.
  */
 class ShadowImageView : ImageView {
@@ -155,6 +152,6 @@ class ShadowImageView : ImageView {
         private val SHADOW_RADIUS = 24f
         private val SHADOW_ELEVATION = 16
 
-        private val DEFAULT_BACKGROUND_COLOR = -0xc3a088
+        private val DEFAULT_BACKGROUND_COLOR = -0xc388a0
     }
 }

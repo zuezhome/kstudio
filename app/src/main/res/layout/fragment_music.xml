@@ -24,6 +24,7 @@
             android:src="@drawable/vinyl_blue"
             android:layout_centerInParent="true"
             />
+
         <!--<android.support.v7.widget.AppCompatImageView-->
             <!--android:id="@+id/button_pop_playlist"-->
             <!--android:layout_width="wrap_content"-->

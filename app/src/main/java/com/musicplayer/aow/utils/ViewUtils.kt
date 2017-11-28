@@ -7,13 +7,6 @@ import android.view.View
 import com.musicplayer.aow.R
 import com.musicplayer.aow.ui.widget.CharacterDrawable
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/4/16
- * Time: 4:08 PM
- * Desc: ViewUtils
- */
 object ViewUtils {
 
     fun setLightStatusBar(view: View) {
@@ -39,6 +32,5 @@ object ViewUtils {
                 .setCharacterTextColor(ContextCompat.getColor(context, R.color.mp_characterView_textColor))
                 .setCharacterPadding(context.resources.getDimensionPixelSize(R.dimen.mp_characterView_padding).toFloat())
                 .build()
-
     }
 }

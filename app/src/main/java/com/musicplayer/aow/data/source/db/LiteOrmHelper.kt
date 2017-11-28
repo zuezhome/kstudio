@@ -6,9 +6,9 @@ import com.musicplayer.aow.Injection
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/10/16
- * Time: 4:00 PM
+ * User:
+ * Date:
+ * Time:
  * Desc: LiteOrmHelper
  */
 object LiteOrmHelper {

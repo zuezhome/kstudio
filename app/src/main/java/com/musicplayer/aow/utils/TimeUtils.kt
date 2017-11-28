@@ -18,12 +18,12 @@ object TimeUtils {
      */
     @SuppressLint("DefaultLocale")
     fun formatDuration(duration: Int): String {
-        var duration = duration
-        duration /= 1000 // milliseconds into seconds
-        var minute = duration / 60
+        var nduration = duration
+        nduration /= 1000 // milliseconds into seconds
+        var minute = nduration / 60
         val hour = minute / 60
         minute %= 60
-        val second = duration % 60
+        val second = nduration % 60
         return if (hour != 0)
             String.format("%2d:%02d:%02d", hour, minute, second)
         else

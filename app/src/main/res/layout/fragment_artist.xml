@@ -1,0 +1,61 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.musicplayer.aow.ui.library.artist.ArtistFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/artist_recycler_views"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/mp.padding.large"
+        android:clipToPadding="false"
+        android:background="@color/transparent"
+        />
+
+    <!--<com.ogaclejapan.arclayout.ArcLayout-->
+        <!--android:id="@+id/arcLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:arc_origin="bottom"-->
+        <!--app:arc_color="#11000000"-->
+        <!--app:arc_radius="148dp"-->
+        <!--app:arc_axisRadius="100dp"-->
+        <!--app:arc_freeAngle="false"-->
+        <!--app:arc_reverseAngle="false"-->
+        <!--&gt;-->
+
+        <!--<Button-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="A"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:background="@color/transparent"-->
+            <!--app:arc_origin="center"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="B"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:background="@color/transparent"-->
+            <!--app:arc_origin="center"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="C"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:background="@color/transparent"-->
+            <!--app:arc_origin="center"-->
+            <!--/>-->
+
+    <!--</com.ogaclejapan.arclayout.ArcLayout>-->
+
+</FrameLayout>

@@ -1,37 +1,39 @@
 package com.musicplayer.aow.player
 
-import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
-import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
 import android.os.Binder
 import android.os.IBinder
 import android.support.v7.app.NotificationCompat
+import android.widget.ImageView
 import android.widget.RemoteViews
+import com.bumptech.glide.Glide
 
 import com.musicplayer.aow.R
 import com.musicplayer.aow.data.model.*
 import com.musicplayer.aow.ui.main.MainActivity
 import com.musicplayer.aow.utils.AlbumUtils
+import java.io.File
 
 class PlaybackService : Service(), IPlayback, IPlayback.Callback {
 
     private var mContentViewBig: RemoteViews? = null
     private var mContentViewSmall: RemoteViews? = null
 
-    private var mPlayer: Player? = null
+    private var mPlayer: Player? = Player.instance
 
     private val mBinder = LocalBinder()
 
-    override val isPlaying: Boolean
+    override var isPlaying: Boolean = false
         get() = mPlayer!!.isPlaying
 
-    override val progress: Int
+    override var progress: Int = 0
         get() = mPlayer!!.progress
 
-    override val playingSong: Song
-        get() = mPlayer!!.playingSong!!
+    override var playingSong: Song? = null
+        get() = mPlayer!!.playingSong
 
     private val smallContentView: RemoteViews
         get() {
@@ -40,7 +42,7 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
                 setUpRemoteView(mContentViewSmall!!)
             }
             updateRemoteViews(mContentViewSmall!!)
-            return mContentViewSmall as RemoteViews
+            return mContentViewSmall!!
         }
 
     private val bigContentView: RemoteViews
@@ -50,7 +52,7 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
                 setUpRemoteView(mContentViewBig!!)
             }
             updateRemoteViews(mContentViewBig!!)
-            return mContentViewBig as RemoteViews
+            return mContentViewBig!!
         }
 
     inner class LocalBinder : Binder() {
@@ -60,7 +62,7 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
 
     override fun onCreate() {
         super.onCreate()
-        mPlayer = Player()
+        mPlayer = Player.instance
         mPlayer!!.registerCallback(this)
     }
 
@@ -99,6 +101,8 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
     }
 
     override fun onDestroy() {
+        stopForeground(true)
+        unregisterCallback(this)
         releasePlayer()
         super.onDestroy()
     }
@@ -139,11 +143,8 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
         return mPlayer!!.seekTo(progress)
     }
 
-//    override fun setPlayMode(playMode: PlayMode) {
-//        mPlayer!!.setPlayMode(playMode)
-//    }
     override fun setPlayMode(playMode: PlayMode) {
-//        mPlayer!!.setPlayMode(playMode)
+        mPlayer!!.setPlayMode(playMode)
     }
 
     override fun registerCallback(callback: IPlayback.Callback) {
@@ -179,6 +180,7 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
 
     override fun onPlayStatusChanged(isPlaying: Boolean) {
         showNotification()
+
     }
 
     // Notification
@@ -219,23 +221,32 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
     private fun updateRemoteViews(remoteView: RemoteViews) {
         val currentSong = mPlayer!!.playingSong
         if (currentSong != null) {
-            remoteView.setTextViewText(R.id.text_view_name, currentSong.displayName)
-            remoteView.setTextViewText(R.id.text_view_artist, currentSong.artist)
+            remoteView.setTextViewText(R.id.text_view_name, currentSong!!.displayName)
+            remoteView.setTextViewText(R.id.text_view_artist, currentSong!!.artist)
         }
         remoteView.setImageViewResource(R.id.image_view_play_toggle, if (isPlaying)
             R.drawable.ic_remote_view_pause
         else
             R.drawable.ic_remote_view_play)
-        val album = AlbumUtils.parseAlbum(playingSong)
+//        val metadataRetriever = MediaMetadataRetriever()
+//        try {
+//            var imageView = applicationCo
+//            metadataRetriever.setDataSource(file.absolutePath)
+//            val albumData = metadataRetriever.embeddedPicture
+//            Glide.with(applicationContext).load(albumData)
+//                    .placeholder(com.musicplayer.aow.R.drawable.ic_music_player)
+//                    .error(com.musicplayer.aow.R.drawable.ic_music_player)
+//                    .into()
+//        }catch (e: IllegalArgumentException){}
+        val album = AlbumUtils.parseAlbum(playingSong!!)
         if (album == null) {
-            remoteView.setImageViewResource(R.id.image_view_album, R.drawable.vinyl_blue)
+            remoteView.setImageViewResource(R.drawable.vinyl_blue, R.drawable.vinyl_blue)
         } else {
-            remoteView.setImageViewBitmap(R.id.image_view_album, album)
+            remoteView.setImageViewBitmap(R.drawable.vinyl_blue, album)
         }
     }
 
     // PendingIntent
-
     private fun getPendingIntent(action: String): PendingIntent {
         return PendingIntent.getService(this, 0, Intent(action), 0)
     }
@@ -250,3 +261,4 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
         private val NOTIFICATION_ID = 1
     }
 }
+

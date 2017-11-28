@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.musicplayer.aow.ui.library.LibraryFragment"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/library_tablayout"
+        android:theme="@style/MP.Theme"
+        app:tabTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/library_view_pager"
+        android:layout_below="@+id/library_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

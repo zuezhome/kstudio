@@ -6,3 +6,144 @@
    android:layout_height="wrap_content"
    android:maxLines="1"
    android:ellipsize="end" />
+
+
+
+   firebase
+
+   HTTP SERVER send message
+   POST https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages:send HTTP/1.1
+
+   Content-Type: application/json
+   Authorization: Bearer ya29.ElqKBGN2Ri_Uz...HnS_uNreA
+
+   {
+     "message":{
+       "token" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+       "notification" : {
+         "body" : "This is an FCM notification message!",
+         "title" : "FCM Message",
+         }
+      }
+   }
+
+
+
+   CircleTransform for Glide Circle ImageView
+   Glide.with(context)
+       .load(yourimageurl)
+       .transform(new CircleTransform(context))
+       .into(userImageView);
+
+   public class CircleTransform extends BitmapTransformation {
+
+       public CircleTransform(Context context) {
+           super(context);
+       }
+
+       @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+           return circleCrop(pool, toTransform);
+       }
+
+       private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+           if (source == null) return null;
+
+           int size = Math.min(source.getWidth(), source.getHeight());
+           int x = (source.getWidth() - size) / 2;
+           int y = (source.getHeight() - size) / 2;
+
+           Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
+
+           Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
+           if (result == null) {
+               result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+           }
+
+           Canvas canvas = new Canvas(result);
+           Paint paint = new Paint();
+           paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+           paint.setAntiAlias(true);
+           float r = size / 2f;
+           canvas.drawCircle(r, r, r, paint);
+           return result;
+       }
+
+       @Override public String getId() {
+           return getClass().getName();
+       }
+   }
+
+
+   FABB OPTION
+   https://www.uplabs.com/posts/faboptions
+   How to use
+
+   Import gradle dependency:
+
+     dependencies {
+        	compile 'com.github.joaquimley:faboptions:1.1.2'
+     }
+   Add the component to your layout:
+
+   <com.joaquimley.faboptions.FabOptions
+   	android:id="@+id/fab_options"
+    	android:layout_width="wrap_content"
+   	android:layout_height="wrap_content"
+     	android:layout_gravity="bottom" />
+   Define a menu.xml file with your buttons information e.g.
+   <menu>
+       <item
+           android:id="@+id/faboptions_favorite"
+           android:icon="@drawable/ic_favorite"
+           android:title="Favorite" />
+
+       <item
+           android:id="@+id/faboptions_textsms"
+           android:icon="@drawable/ic_textsms"
+           android:title="Message" />
+
+       <item
+           android:id="@+id/faboptions_download"
+           android:icon="@drawable/ic_file_download"
+           android:title="Download" />
+
+
+       <item
+           android:id="@+id/faboptions_share"
+           android:icon="@drawable/ic_share"
+           android:title="Share" />
+   </menu>
+   XML:
+
+   Bind the buttons menu by adding the custom attribute app:button_menu="@menu/your_fab_buttons" to your component XML.
+   Programmatically
+
+   Bind the buttons menu on your FabOptions instance with FabOptions#setMenu(Menu).
+   FabOptions fabOptions = (FabOptions) findViewById(R.id.fab_options);
+   fabOptions.setButtonsMenu(R.menu.your_fab_buttons);
+   Listening for click events
+
+   Set your FabOptions instance click listener.
+
+   Handle the click events for each button id defined on the menu.xml.
+
+   Customizing
+
+   You can change the color of the component, both the FAB and the "background" individually, unless specified the background will always adopt the same value as the app:fab_color attribute (default is the theme's accent color).
+
+    <com.joaquimley.faboptions.FabOptions
+           android:id="@+id/fab_options"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:background_color="@color/fabOptionsBackgroundColor"
+           app:fab_color="@color/fabOptionsFabColor" />
+   You can also use Java
+
+   fabOptions.setFabColor(R.color.fabOptionsFabColor);
+   fabOptions.setBackgroundColor(R.color.fabOptionsBackgroundColor);
+   Note: One is not depedent on the other, you can costomize individualy.
+
+   Changing button color
+
+   fabOptions.setButtonColor(R.id.faboptions_favorite, R.color.colorAccent)
+   This will return a boolean value if it's able to change the color.

@@ -1,5 +1,6 @@
 package com.musicplayer.aow.data.model
 
+import android.graphics.Bitmap
 import android.os.Parcel
 import android.os.Parcelable
 import com.litesuits.orm.db.annotation.PrimaryKey
@@ -29,6 +30,8 @@ class Song : Parcelable {
     var size: Int = 0
 
     var isFavorite: Boolean = false
+
+    var albumArt: String? = null
 
     constructor() {
         // Empty
@@ -66,6 +69,9 @@ class Song : Parcelable {
         this.isFavorite = `in`.readInt() == 1
     }
 
+    override fun toString(): String {
+        return "Song(id=$id, title=$title, displayName=$displayName, artist=$artist, album=$album, path=$path, duration=$duration, size=$size, isFavorite=$isFavorite, albumArt=$albumArt)"
+    }
 
 
     companion object {

@@ -1,40 +1,34 @@
 package com.musicplayer.aow.ui.main
 
+import android.annotation.TargetApi
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
 import android.widget.RadioButton
-import butterknife.BindView
-import butterknife.BindViews
 import butterknife.ButterKnife
-import butterknife.OnCheckedChanged
 import com.musicplayer.aow.R
-import com.musicplayer.aow.R.id.*
-import com.musicplayer.aow.ui.allsongs.AllSongsFragment
 import com.musicplayer.aow.ui.base.BaseActivity
 import com.musicplayer.aow.ui.base.BaseFragment
+import com.musicplayer.aow.ui.library.LibraryFragment
 import com.musicplayer.aow.ui.musicupdate.MusicUpdateFragment
 import com.musicplayer.aow.ui.music.MusicPlayerFragment
+import shortbread.Shortbread
+import com.github.nisrulz.sensey.Sensey
+import com.musicplayer.aow.ui.settings.SettingsFragment
+import com.musicplayer.aow.utils.Settings
+import com.musicplayer.aow.utils.StorageUtil
 
-class MainActivity : BaseActivity() {
 
-    //default layout to display 0= player, 1= playlist, 2 = files, .....
-//    private val DEFAULT_PAGE_INDEX = 1
+open class MainActivity : BaseActivity() {
 
-    @BindView(R.id.toolbar)
     internal var toolbar: Toolbar? = null
-
-    @BindView(view_pager)
-    internal var viewPager: ViewPager? = null
-
-    @BindViews(radio_button_music,
-            radio_button_all_songs,
-            radio_button_musicupdate)
+    private var viewPager: ViewPager? = null
     internal var radioButtons: List<RadioButton>? = null
+    private lateinit var mTitles: Array<String>
 
-    internal lateinit var mTitles: Array<String>
-
+    @TargetApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -42,10 +36,19 @@ class MainActivity : BaseActivity() {
         ButterKnife.bind(this)
         setSupportActionBar(toolbar)
 
-        var radioBtn : List<RadioButton> = listOf(findViewById(R.id.radio_button_music) as RadioButton,
+        Shortbread.create(this);
+
+        //Application settings
+        Settings.instance!!.intialization(this)
+        StorageUtil(applicationContext)!!.storageLocationDir()
+
+        var radioBtn: List<RadioButton> = listOf(
+                findViewById(R.id.radio_button_music) as RadioButton,
                 findViewById(R.id.radio_button_all_songs) as RadioButton,
-                findViewById(R.id.radio_button_musicupdate) as RadioButton)
+                findViewById(R.id.radio_button_musicupdate) as RadioButton,
+                findViewById(R.id.radio_button_settings) as RadioButton)
         radioButtons = radioBtn
+        toolbar = findViewById(R.id.toolbar) as Toolbar
 
         viewPager = findViewById(R.id.view_pager) as ViewPager?
 
@@ -53,10 +56,11 @@ class MainActivity : BaseActivity() {
         mTitles = resources.getStringArray(R.array.mp_main_titles)
 
         // Fragments
-        var fragments : Array<BaseFragment?> = arrayOfNulls<BaseFragment>(mTitles.size)
+        var fragments: Array<BaseFragment?> = arrayOfNulls<BaseFragment>(mTitles.size)
         fragments[0] = MusicPlayerFragment()
-        fragments[1] = AllSongsFragment()
+        fragments[1] = LibraryFragment()
         fragments[2] = MusicUpdateFragment()
+        fragments[3] = SettingsFragment()
 
         // Inflate ViewPager
         var adapter = MainPagerAdapter(supportFragmentManager, mTitles, fragments)
@@ -75,20 +79,29 @@ class MainActivity : BaseActivity() {
             }
         })
 
+        //implement on checked on each radio button
+        radioBtn.forEach { e ->
+            e.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    onItemChecked(radioButtons!!.indexOf(buttonView))
+                }
+            }
+        }
         radioButtons!![DEFAULT_PAGE_INDEX].isChecked = true
+    }
+
+    override fun onStart(){
+        super.onStart()
     }
 
     override fun onBackPressed() {
         moveTaskToBack(true)
     }
 
-    @OnCheckedChanged(radio_button_music,
-            radio_button_all_songs,
-            radio_button_musicupdate)
-    fun onRadioButtonChecked(button: RadioButton, isChecked: Boolean) {
-        if (isChecked) {
-            onItemChecked(radioButtons!!.indexOf(button))
-        }
+    override fun onDestroy(){
+        //sensey gesture
+        Sensey.getInstance().stop();
+        super.onDestroy()
     }
 
     private fun onItemChecked(position: Int) {
@@ -106,3 +119,4 @@ class MainActivity : BaseActivity() {
         }
     }
 }
+

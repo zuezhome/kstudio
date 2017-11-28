@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Ignore;
@@ -61,6 +62,10 @@ public class PlayList implements Parcelable {
     public PlayList(Song song) {
         songs.add(song);
         numOfSongs = 1;
+    }
+
+    public PlayList(List songList) {
+        songs.addAll(songList);
     }
 
     public PlayList(Parcel in) {
@@ -124,7 +129,7 @@ public class PlayList implements Parcelable {
     }
 
     public void setSongs(@Nullable List<Song> songs) {
-        if (songs == null) {
+        if (songs.isEmpty()) {
             songs = new ArrayList<>();
         }
         this.songs = songs;
@@ -260,7 +265,11 @@ public class PlayList implements Parcelable {
         if (playingIndex != NO_POSITION) {
             return songs.get(playingIndex);
         }
-        return null;
+        if(this.songs.isEmpty()){
+            return null;
+        }
+        Song song = this.songs.get(0);
+        return song;
     }
 
     public boolean hasLast() {
@@ -298,6 +307,7 @@ public class PlayList implements Parcelable {
      * has a next song to play, for this condition, it returns true.
      */
     public boolean hasNext(boolean fromComplete) {
+        Log.d("Has_Next_Called", playMode.toString());
         if (songs.isEmpty()) return false;
         if (fromComplete) {
             if (playMode == PlayMode.LIST && playingIndex + 1 >= songs.size()) return false;
@@ -343,5 +353,20 @@ public class PlayList implements Parcelable {
         playList.setSongs(folder.getSongs());
         playList.setNumOfSongs(folder.getNumOfSongs());
         return playList;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayList{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", numOfSongs=" + numOfSongs +
+                ", favorite=" + favorite +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", songs=" + songs +
+                ", playingIndex=" + playingIndex +
+                ", playMode=" + playMode +
+                '}';
     }
 }

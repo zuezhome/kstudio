@@ -9,13 +9,7 @@ import com.musicplayer.aow.data.model.*
 import java.io.File
 import java.util.ArrayList
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/9/16
- * Time: 10:27 PM
- * Desc: DBUtils
- */
+
 object DBUtils {
 
     fun generateFavoritePlayList(context: Context?): PlayList {
@@ -33,11 +27,11 @@ object DBUtils {
         val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val musicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
         val all = File("/storage/")
-        defaultFolders.add(FileUtils.folderFromDir(internalDir))
-        defaultFolders.add(FileUtils.folderFromDir(sdcardDir))
-        defaultFolders.add(FileUtils.folderFromDir(downloadDir))
-        defaultFolders.add(FileUtils.folderFromDir(musicDir))
-        defaultFolders.add(FileUtils.folderFromDir(all))
+        defaultFolders.add(FileUtilities.folderFromDir(internalDir))
+        defaultFolders.add(FileUtilities.folderFromDir(sdcardDir))
+        defaultFolders.add(FileUtilities.folderFromDir(downloadDir))
+        defaultFolders.add(FileUtilities.folderFromDir(musicDir))
+        defaultFolders.add(FileUtilities.folderFromDir(all))
         return defaultFolders
     }
 }

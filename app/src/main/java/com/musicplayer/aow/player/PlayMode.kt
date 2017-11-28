@@ -2,10 +2,10 @@ package com.musicplayer.aow.player
 
 /**
  * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/5/16
- * Time: 5:48 PM
- * Desc: PlayMode
+ * User:
+ * Date:
+ * Time:
+ * Desc: AppContract
  */
 enum class PlayMode {
     SINGLE,

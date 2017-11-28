@@ -6,13 +6,7 @@ import com.musicplayer.aow.player.PlaybackService
 import com.musicplayer.aow.ui.base.BasePresenter
 import com.musicplayer.aow.ui.base.BaseView
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/12/16
- * Time: 8:27 AM
- * Desc: MusicPlayerContract
- */
+
 /* package */  interface MusicPlayerContract {
 
     interface View : BaseView<Presenter> {
@@ -38,7 +32,7 @@ import com.musicplayer.aow.ui.base.BaseView
 
         fun retrieveLastPlayMode()
 
-//        fun setSongAsFavorite(song: Song, favorite: Boolean)
+        fun setSongAsFavorite(song: Song, favorite: Boolean)
 
         fun bindPlaybackService()
 

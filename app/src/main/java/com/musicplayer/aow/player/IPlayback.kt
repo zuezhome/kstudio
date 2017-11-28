@@ -9,7 +9,7 @@ interface IPlayback {
 
     val progress: Int
 
-    val playingSong: Song
+    val playingSong: Song?
 
     fun setPlayList(list: PlayList)
 
