@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
     //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:25.4.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -68,6 +69,9 @@ dependencies {
     //recycler_view fastscroll
     compile 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
 
+=======
+    
+>>>>>>> dadd6d2292e46ec1e090154c2ccd7928a2639971
 }
 repositories {
     mavenCentral()
