@@ -13,14 +13,14 @@
     android:showDividers="beginning|middle|end"
     >
 
-    <RadioButton
-        android:id="@+id/radio_button_music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/selector_main_nav_music"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        tools:button="@drawable/ic_main_nav_music"
-        />
+    <!--<RadioButton-->
+        <!--android:id="@+id/radio_button_music"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:button="@drawable/selector_main_nav_music"-->
+        <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--tools:button="@drawable/ic_main_nav_music"-->
+        <!--/>-->
 
     <!--<RadioButton-->
         <!--android:id="@+id/radio_button_play_list"-->

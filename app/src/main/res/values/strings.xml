@@ -7,7 +7,7 @@
     <string name="todo">TODO</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Strings related to Settings -->
+    <!-- Strings relatedApplicationSettingsings -->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -78,4 +78,35 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <!--WIFI STRINGS-->
+    <string name="app_name">WiFi Direct</string>
+    <string name="enable_p2p_button">P2P On/Off</string>
+    <string name="discover_peers_button">Discover</string>
+    <string name="connect_peer_button">Connect</string>
+    <string name="disconnect_peer_button">Disconnect</string>
+    <string name="get_file_button">Launch Gallery</string>
+    <string name="empty"></string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="client_text">This device will act as a client. Click on Gallery button to pick a local(stored) file</string>
+    <string name="empty_message">No devices found. Turn on P2P and perform discovery from the Action Bar</string>
+    <string name="p2p_off_warning">Enable P2P from action bar button above or system settings</string>
+    <string name="group_owner_text">"Am I the Group Owner? "</string>
+    <string name="label_me">ME</string>
+    <string name="label_peers">PEERS</string>
+
+
+    <!--Alarm Scheduler-->
+    <string name="btn_start"> Start </string>
+    <string name="btn_stop"> Stop </string>
+    <string name="kings_studio">KINGS STUDIO</string>
+    <string name="we_love_your_music">we love your music</string>
 </resources>

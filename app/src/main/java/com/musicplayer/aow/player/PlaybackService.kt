@@ -3,21 +3,27 @@ package com.musicplayer.aow.player
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
-import android.media.MediaMetadataRetriever
 import android.os.Binder
 import android.os.IBinder
+import android.support.v4.app.ActivityCompat.finishAffinity
 import android.support.v7.app.NotificationCompat
-import android.widget.ImageView
+import android.util.Log
 import android.widget.RemoteViews
-import com.bumptech.glide.Glide
-
 import com.musicplayer.aow.R
 import com.musicplayer.aow.data.model.*
 import com.musicplayer.aow.ui.main.MainActivity
-import com.musicplayer.aow.utils.AlbumUtils
+import com.musicplayer.aow.utils.killactivity.ActivityStack
+import android.media.AudioManager
+import android.media.MediaMetadataRetriever
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.musicplayer.aow.utils.AlbumUtils.decodeSampledBitmapFromResource
+import com.musicplayer.aow.utils.AlbumUtils.getResizedBitmap
+import org.jetbrains.anko.doAsync
 import java.io.File
 
-class PlaybackService : Service(), IPlayback, IPlayback.Callback {
+
+class PlaybackService : Service(), IPlayback, IPlayback.Callback, AudioManager.OnAudioFocusChangeListener {
 
     private var mContentViewBig: RemoteViews? = null
     private var mContentViewSmall: RemoteViews? = null
@@ -94,9 +100,21 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
         return mBinder
     }
 
+//    override fun onUnbind(intent: Intent): Boolean {
+//        return false
+//    }
+
     override fun stopService(name: Intent): Boolean {
         stopForeground(true)
         unregisterCallback(this)
+        //stop activity
+        var mActivityStack = ActivityStack.instance
+        if (mActivityStack != null){
+            Log.e("Close App", "called")
+            finishAffinity(mActivityStack.getMainActivity())
+        }else{
+            Log.e("Cant Close App", "called")
+        }
         return super.stopService(name)
     }
 
@@ -221,28 +239,67 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
     private fun updateRemoteViews(remoteView: RemoteViews) {
         val currentSong = mPlayer!!.playingSong
         if (currentSong != null) {
-            remoteView.setTextViewText(R.id.text_view_name, currentSong!!.displayName)
-            remoteView.setTextViewText(R.id.text_view_artist, currentSong!!.artist)
+            remoteView.setTextViewText(R.id.text_view_name, currentSong.displayName)
+            remoteView.setTextViewText(R.id.text_view_artist, currentSong.artist)
         }
         remoteView.setImageViewResource(R.id.image_view_play_toggle, if (isPlaying)
             R.drawable.ic_remote_view_pause
         else
             R.drawable.ic_remote_view_play)
-//        val metadataRetriever = MediaMetadataRetriever()
-//        try {
-//            var imageView = applicationCo
+
+        val metadataRetriever = MediaMetadataRetriever()
+        var file = File(currentSong!!.path)
+        metadataRetriever.setDataSource(file.absolutePath)
+        val albumData = metadataRetriever.embeddedPicture
+        if (albumData != null) {
+//            var bitimg = getResizedBitmap(albumData, 50)
+//            remoteView.setImageViewBitmap(R.id.image_view_album, bitimg)
+        }
+//        doAsync {
+//            val metadataRetriever = MediaMetadataRetriever()
+//            var file = File(currentSong!!.path)
 //            metadataRetriever.setDataSource(file.absolutePath)
 //            val albumData = metadataRetriever.embeddedPicture
-//            Glide.with(applicationContext).load(albumData)
-//                    .placeholder(com.musicplayer.aow.R.drawable.ic_music_player)
-//                    .error(com.musicplayer.aow.R.drawable.ic_music_player)
-//                    .into()
-//        }catch (e: IllegalArgumentException){}
-        val album = AlbumUtils.parseAlbum(playingSong!!)
-        if (album == null) {
-            remoteView.setImageViewResource(R.drawable.vinyl_blue, R.drawable.vinyl_blue)
-        } else {
-            remoteView.setImageViewBitmap(R.drawable.vinyl_blue, album)
+//            if (albumData != null) {
+//                var imageBit = Glide.with(applicationContext)
+//                        .load(albumData)
+//                        .asBitmap()
+//                        .into(-1, -1)
+//                        .get()
+//                remoteView.setImageViewBitmap(R.id.image_view_album, imageBit)
+//            }
+//        }
+
+//        val album = AlbumUtils.parseAlbum(playingSong!!)
+//        if (album == null) {
+//            remoteView.setImageViewResource(R.drawable.vinyl_blue, R.drawable.vinyl_blue)
+//        } else {
+//            remoteView.setImageViewBitmap(R.drawable.vinyl_blue, album)
+//        }
+    }
+
+
+    override fun onAudioFocusChange(focusChange: Int) {
+        when (focusChange) {
+            AudioManager.AUDIOFOCUS_GAIN, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE -> if (mPlayer!!.isPlaying && mPlayer!!.play()) {
+                mPlayer!!.setVolume(1.0f, 1.0f)
+            }
+            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK -> if (mPlayer!!.isPlaying && mPlayer!!.play()) {
+                mPlayer!!.setVolume(0.8f, 0.8f)
+            }
+            AudioManager.AUDIOFOCUS_LOSS -> if (mPlayer!!.isPlaying && mPlayer!!.play()) {
+                mPlayer!!.setVolume(0.5f, 0.5f)
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                Log.i("MediaService", "AUDIOFOCUS_LOSS_TRANSIENT")
+                if (mPlayer!!.isPlaying && mPlayer!!.play()) {
+                    Log.i("MediaService", "AUDIOFOCUS_LOSS_TRANSIENT execute")
+                    //
+                }
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> if (mPlayer!!.isPlaying && mPlayer!!.play()) {
+                mPlayer!!.setVolume(0.2f, 0.2f)
+            }
         }
     }
 
@@ -257,7 +314,6 @@ class PlaybackService : Service(), IPlayback, IPlayback.Callback {
         private val ACTION_PLAY_LAST = "com.musicplayer.aow.ACTION.PLAY_LAST"
         private val ACTION_PLAY_NEXT = "com.musicplayer.aow.ACTION.PLAY_NEXT"
         private val ACTION_STOP_SERVICE = "com.musicplayer.aow.ACTION.STOP_SERVICE"
-
         private val NOTIFICATION_ID = 1
     }
 }

@@ -17,8 +17,9 @@
         <item name="colorControlHighlight">@color/mp.theme.dark_blue.colorControlHighlight</item>
 
         <!--Change status bar to white background and black icons-->
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!--<item name="android:statusBarColor" tools:targetApi="lollipop">@color/transparent</item>-->
+        <!--<item name="android:windowDisablePreview">true</item>-->
 
         <!-- ActionMode -->
         <item name="windowActionModeOverlay">true</item>
@@ -30,16 +31,27 @@
 
         <!-- PopupMenu -->
         <item name="popupMenuStyle">@style/MP.Theme.Widget.PopupMenu</item>
-        <item name="textAppearanceLargePopupMenu">@style/MP.Theme.TextAppearance.LargePopupMenu</item>
-        <item name="textAppearanceSmallPopupMenu">@style/MP.Theme.TextAppearance.SmallPopupMenu</item>
+        <item name="textAppearanceLargePopupMenu">@style/MP.Theme.TextAppearance.LargePopupMenu
+        </item>
+        <item name="textAppearanceSmallPopupMenu">@style/MP.Theme.TextAppearance.SmallPopupMenu
+        </item>
+
+        <!--Activity Transmission-->
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="MP.Theme" parent="AppTheme"/>
+    <style name="MP.Theme" parent="AppTheme" />
 
+    <style name="AppBlueTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorAccent">@color/blue</item>
+    </style>
 
     <!-- Widget -->
 
-    <style name="MP.Theme.Widget"/>
+    <style name="MP.Theme.Widget" />
 
     <!-- Widget - Divider -->
 
@@ -88,7 +100,7 @@
         <item name="height">?attr/actionBarSize</item>
         <item name="backgroundSplit">@null</item>
         <item name="titleTextStyle">@style/MP.Theme.TextAppearance.ActionMode.Title</item>
-        <item name="android:tint">@color/black</item>
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="MP.Theme.Widget.ActionMode.CloseButton" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
@@ -101,7 +113,7 @@
 
     <style name="MP.Theme.Widget.PopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="android:popupBackground">@color/mp.popupMenu.background</item>
-        <item name="android:dropDownHorizontalOffset">-24dp</item>
+        <item name="android:dropDownHorizontalOffset">-5dp</item>
     </style>
 
     <style name="MP.Theme.Widget.RecyclerView">
@@ -132,9 +144,8 @@
 
 
     <!-- TextAppearance -->
-
     <style name="MP.Theme.TextAppearance">
-        <item name="fontPath">@string/mp.font.roboto.monospace.regular</item>
+        <!--<item name="fontPath">@string/mp.font</item>-->
     </style>
 
     <style name="MP.Theme.TextAppearance.Toolbar">
@@ -142,7 +153,12 @@
     </style>
 
     <style name="MP.Theme.TextAppearance.Light.Toolbar.Title" parent="MP.Theme.TextAppearance.Toolbar">
-        <item name="android:textColor">@color/mp.theme.dark_blue.colorAccent</item>
+        <item name="android:textColor">@color/mp.theme.dark_blue.toolBar.colorAccent</item>
+    </style>
+
+    <style name="MP.Theme.TextAppearance.Light.Toolbar.Label" parent="MP.Theme.TextAppearance.Toolbar">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">8dp</item>
     </style>
 
     <style name="MP.Theme.TextAppearance.ActionMode.Title" parent="TextAppearance.AppCompat.Widget.ActionMode.Title">
@@ -158,20 +174,20 @@
         <item name="android:id">@id/text_view_summary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/mp.text.hint</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/mp.text.hint</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/mp.padding.large</item>
     </style>
 
     <style name="MP.Theme.TextAppearance.List.Title">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/mp.text.list.title</item>
         <item name="android:singleLine">true</item>
     </style>
 
     <style name="MP.Theme.TextAppearance.List.Hint">
-        <item name="android:textColor">@color/selector_list_hint_text</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/mp.text.list.hint</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -183,7 +199,7 @@
         <item name="android:layout_margin">@dimen/mp.margin.xlarge</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/mp.text.hint</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -195,19 +211,49 @@
     <style name="MP.Theme.TextAppearance.SmallPopupMenu" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
         <item name="android:textColor">@color/mp.theme.dark_blue.colorPrimary</item>
     </style>
-    <!--<style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">-->
-        <!--<item name="windowNoTitle">true</item>-->
-        <!--<item name="windowActionBar">false</item>-->
-        <!--<item name="android:windowFullscreen">true</item>-->
-        <!--<item name="android:windowContentOverlay">@null</item>-->
-    <!--</style>-->
-
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
 
     <style name="AppTheme.PopMe">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
+
+    <style name="AppTheme.ExternalPlayer">
+        <item name="android:background">@color/translusent</item>
+        <item name="android:windowBackground">@color/translusent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+    <style name="AppTheme.PopActivities" parent="Theme.AppCompat.NoActionBar">
+        <!--<item name="android:background">@color/transparent</item>-->
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowCloseOnTouchOutside">false</item>-->
+        <!--<item name="android:layout_x">0.8dp</item>-->
+        <!--<item name="android:layout_y">0.8dp</item>-->
+    </style>
+
+    <style name="PopActivities" parent="Theme.AppCompat.NoActionBar">
+        <!-- This is the color of the Toolbar -->
+        <!--<item name="colorPrimary">@color/red</item>-->
+        <!-- This is the color of the Status bar -->
+        <!--<item name="colorPrimaryDark">@color/white</item>-->
+        <!-- The Color of the Status bar -->
+        <!--<item name="statusBarColor">@color/primary_dark</item>-->
+        <item name="colorAccent">@color/red</item>
+        <item name="windowNoTitle">true</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+    <style name="AppTheme.Photo">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+    </style>
+
+    <style name="MP.Theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MP.Theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

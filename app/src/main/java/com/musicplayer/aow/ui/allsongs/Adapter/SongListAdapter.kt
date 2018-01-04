@@ -60,7 +60,7 @@ class SongListAdapter(song: List<Song>, context: Context):RecyclerView.Adapter<S
 //                    mediaPlayer.setDataSource(model.mSongPath)
 //                    mediaPlayer.prepare()
 //                    mediaPlayer.start()
-//                MusicPlayerFragment().playSong(song)
+//                MusicPlayerActivity().playSong(song)
 //
             }
         } )

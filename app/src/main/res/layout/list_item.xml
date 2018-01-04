@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:layout_toLeftOf="@+id/btnMore"
             android:text="Sample title"
-            android:textColor="@android:color/white"
+            android:textColor="@color/mp.theme.dark_blue.colorAccent"
             android:textSize="18sp" />
 
         <Button
@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="more"
-            android:background="@drawable/pop_up_gb"
+            android:background="@drawable/pop_up_gb_red"
             android:textColor="#FFF" />
 
 
@@ -43,7 +43,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_list"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="240dp"
         android:layout_gravity="center_vertical"
         android:orientation="horizontal" />
 

@@ -16,7 +16,7 @@
                 android:translateY="12.000000">
                 <path
                     android:name="Shape"
-                    android:fillColor="#000000"
+                    android:fillColor="@color/white"
                     android:pathData="M 8 5 L 8 19 L 19 12 Z"/>
             </group>
         </group>

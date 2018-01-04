@@ -11,13 +11,13 @@ import rx.Observable
  * Time:
  * Desc: AppContract
  */
-/* package */ internal interface AppContract {
+internal interface AppContract {
 
     // Play List
 
-    fun playLists(): Observable<MutableList<PlayList>>
+    fun playLists(): Observable<List<PlayList>>?
 
-    fun cachedPlayLists(): MutableList<PlayList>
+    fun cachedPlayLists(): MutableList<PlayList>?
 
     fun create(playList: PlayList): Observable<PlayList>
 

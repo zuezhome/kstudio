@@ -1,7 +1,6 @@
 package com.musicplayer.aow
 
 import android.app.Application
-import shortbread.Shortbread
 
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -20,13 +19,13 @@ class MusicPlayerApplication : Application() {
 
         instance = this
 
-        // Custom fonts
-        CalligraphyConfig.initDefault(
-                CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Roboto-Regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
-        )
+//        // Custom fonts
+//        CalligraphyConfig.initDefault(
+//                CalligraphyConfig.Builder()
+//                        .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+//                        .setFontAttrId(R.attr.fontPath)
+//                        .build()
+//        )
 
     }
 

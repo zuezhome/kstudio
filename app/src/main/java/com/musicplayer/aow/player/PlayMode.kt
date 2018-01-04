@@ -1,25 +1,22 @@
 package com.musicplayer.aow.player
 
-/**
- * Created with Android Studio.
- * User:
- * Date:
- * Time:
- * Desc: AppContract
- */
 enum class PlayMode {
     SINGLE,
     default,
     LIST,
     LOOP,
-
     SHUFFLE;
 
 
     companion object {
 
-        fun switchNextMode(current: PlayMode?): PlayMode {
-            if (current == null) return default
+        fun switchNextMode(current: PlayMode): PlayMode {
+            if (current == null){
+                return default
+            }
+            if (current == default){
+                return LOOP
+            }
 
             when (current) {
                 LOOP -> return LIST

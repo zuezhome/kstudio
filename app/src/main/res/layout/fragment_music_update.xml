@@ -27,13 +27,13 @@
 
         <Button
             android:id="@+id/refresh"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="Refresh"
-            android:background="@color/transparent"/>
+            android:background="@drawable/pop_up_gb_red"/>
 
 
     </LinearLayout>
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="5dp"
-        android:background="#15000000"
+        android:background="@color/grey"
         />
 
 </LinearLayout>

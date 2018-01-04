@@ -5,13 +5,18 @@ import android.app.Application
 import android.media.MediaMetadataRetriever
 import android.os.Environment
 import android.os.SystemClock
+import android.util.Log
 import com.github.nisrulz.sensey.FlipDetector
 import com.github.nisrulz.sensey.Sensey
 import com.github.nisrulz.sensey.ShakeDetector
+import com.musicplayer.aow.Injection
 import com.musicplayer.aow.data.model.Song
 import com.musicplayer.aow.player.Player
 import java.io.File
+import java.io.FilenameFilter
 import java.util.*
+
+
 
 
 /**
@@ -26,12 +31,12 @@ class Settings (): Application() {
     val shakeaction = "shake"
     val flipaction = "flip"
 
-    fun intialization(context: Activity){
-        this.context = context
-        var getSettings: StorageUtil? = StorageUtil(this.context!!)
+    fun intialization(){
+        Sensey.getInstance().init(Injection.provideContext()!!)
+        var getSettings: StorageUtil? = StorageUtil(Injection.provideContext()!!)
         //Shake Gesture settings
         var shakeSettings = getSettings!!.loadStringValue(shakeaction)
-        Sensey.getInstance().init(this.context);
+        Sensey.getInstance().init(Injection.provideContext()!!);
         if (shakeSettings.equals("on")){
             getSettings!!.saveStringValue(shakeaction, "on")
             Sensey.getInstance().startShakeDetection(shakeGesture);
@@ -41,7 +46,7 @@ class Settings (): Application() {
         }
         //Flip gesture settings
         var flipSettings = getSettings!!.loadStringValue(shakeaction)
-        Sensey.getInstance().init(this.context);
+        Sensey.getInstance().init(Injection.provideContext()!!);
         if (flipSettings.equals("on")){
             getSettings!!.saveStringValue(flipaction, "on")
             Sensey.getInstance().startFlipDetection(flipGesture);
@@ -64,6 +69,7 @@ class Settings (): Application() {
             override fun onShakeStopped() {
                 // Shake stopped, do something
             }
+
         }
         return shakeListener
     }
@@ -89,41 +95,94 @@ class Settings (): Application() {
         return flipListener
     }
 
-    fun searchSongs(context: Activity): Boolean {
+    fun searchSongs(): Boolean {
         var songModelData: ArrayList<Song> = ArrayList()
         //context or activity
-        var songCursor = CursorDB().callCursor(context)
+        var songCursor = CursorDB().callCursor(Injection.provideContext()!!)
         if (songCursor != null) {
             var indexPosition = 0
-            //clear albumart cache
-            var applicationFoldercontext = "com.musicplayer.aow"
-            val dir = File(Environment.getExternalStorageDirectory(), applicationFoldercontext + "/cache/img")
-            dir.delete()
             while (songCursor != null && songCursor!!.moveToNext()) {
                 indexPosition = indexPosition + 1
-                songModelData.add(CursorDB().cursorToMusic(context, songCursor!!, indexPosition))
-
-                //save album art to app folder
-                val metadataRetriever = MediaMetadataRetriever()
-                metadataRetriever.setDataSource(songModelData[indexPosition - 1].path)
-                val albumData = metadataRetriever.embeddedPicture
-                if(albumData != null){
-                    songModelData[indexPosition - 1].albumArt = StorageUtil(context).byteArrayToFile(albumData.clone(), SystemClock.currentThreadTimeMillis().toString())
-                }
+                songModelData.add(CursorDB().cursorToMusic(songCursor!!, indexPosition))
             }
             songCursor!!.close()
-        }else{
-            //
         }
-
-        return StorageUtil(context).storeAudio(songModelData)
+        return StorageUtil(Injection.provideContext()!!).storeAudio(songModelData)
     }
 
-    fun readSongs(context: Activity): ArrayList<Song>?{
-        var getSettings: StorageUtil? = StorageUtil(this.context!!)
-        var getAudios = getSettings!!.loadAudio()
-        return getAudios
+    fun searchSongsLocal(): Boolean {
+        var dir = File(Environment.getExternalStorageDirectory().absolutePath)
+        var songList: ArrayList<Song>? = null
+        var songModelData = getfile(dir, songList)
+        return StorageUtil(Injection.provideContext()!!).storeAudio(songModelData)
     }
+
+    fun getfile(dir: File, songList: ArrayList<Song>?): ArrayList<Song>? {
+        var fileList:ArrayList<File>? = null
+        var listFile = dir.listFiles()
+
+        if (listFile != null && listFile.size > 0) {
+            for (i in listFile.indices) {
+
+                if (listFile[i].isDirectory) {
+                    fileList?.add(listFile[i])
+                    getfile(listFile[i], songList)
+
+                } else {
+                    if (listFile[i].name.endsWith(".mp3")) {
+                        fileList?.add(listFile[i])
+                        var song = FileUtilities.fileToMusic(File(listFile[i].toURI()))
+                        Log.e("Settings.kt",song.toString())
+                        songList?.add(song!!)
+                        Log.e("Settings.kt",songList?. toString())
+                    }
+                    Log.e("Settings.kt",songList?.size.toString())
+                }
+
+            }
+        }
+        Log.e("Settings.kt",songList?.size.toString())
+        return songList
+    }
+
+
+
+    var songsList: ArrayList<Song?>? = null
+
+    fun getSongsLocally(): ArrayList<Song?>? {
+        val home = File(Environment.getExternalStorageDirectory().absolutePath)
+
+        if (home.listFiles(FileExtensionFilter()).isNotEmpty()) {
+            for (file in home.listFiles(FileExtensionFilter())) {
+//                val song = HashMap<String, String>()
+//                song.put("songTitle", file.getName().substring(0, file.getName().length - 4))
+//                song.put("songPath", file.getPath())
+                var song = FileUtilities.fileToMusic(File(file.toURI()))
+                // Adding each song to SongList
+                songsList?.add(song)
+                Log.e("Settings.kt plus",songsList?.size.toString())
+            }
+        }
+        Log.e("Settings.kt Total",songsList?.size.toString())
+        // return songs list array
+        return songsList
+    }
+
+    internal inner class FileExtensionFilter : FilenameFilter {
+        override fun accept(dir: File, name: String): Boolean {
+            return name.endsWith(".mp3") || name.endsWith(".MP3")
+        }
+    }
+
+    fun readSongs(): ArrayList<Song>?{
+        var getSettings = StorageUtil(Injection.provideContext()!!)
+        if (getSettings != null) {
+            var getAudios = getSettings!!.loadAudio()
+            return getAudios
+        }
+        return ArrayList(0)
+    }
+
 
 
     companion object {
@@ -131,6 +190,7 @@ class Settings (): Application() {
         private val TAG = "Setings"
 
         @Volatile private var sInstance: Settings? = null
+
 
         val instance: Settings?
             get() {

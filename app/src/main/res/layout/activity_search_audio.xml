@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.musicplayer.aow.searchaudio.SearchAudio">
+    tools:context="com.musicplayer.aow.searchaudio.SearchAudio"
+    android:background="@color/red">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -14,33 +16,33 @@
         toolbar:titleTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"
         toolbar:title="Search for local audio files."/>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/toolbar2"
         android:layout_gravity="center"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="0dp" android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
             <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/spin_kit"
-                style="@style/SpinKitView.Large.DoubleBounce"
+                style="@style/SpinKitView.Large.MultiplePulse"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="350dp"
                 android:layout_gravity="center"
                 app:SpinKit_Color="@color/white" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/numbers_of_songs_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_centerInParent="true"
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:text=""
@@ -52,13 +54,13 @@
                 android:id="@+id/search_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/numbers_of_songs_label"
+                android:layout_gravity="center"
+                android:background="@drawable/pop_up_gb"
                 android:text="Done"
                 android:textColor="@color/white"
-                android:background="@drawable/pop_up_gb"
-                android:visibility="invisible"/>
-        </RelativeLayout>
-    </LinearLayout>
+                android:visibility="invisible" />
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </android.support.constraint.ConstraintLayout>

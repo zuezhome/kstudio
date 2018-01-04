@@ -12,26 +12,19 @@ import rx.Observable
 import java.io.File
 import java.util.Date
 
-/**
- * Created with Android Studio.
- * User:
- * Date:
- * Time:
- * Desc: AppContract
- */
-/* package */ internal class AppLocalDataSource(private val mContext: Context?, private val mLiteOrm: LiteOrm?) : AppContract {
+internal class AppLocalDataSource(private val mContext: Context?, private val mLiteOrm: LiteOrm?) : AppContract {
 
     // Play List
 
-    override fun playLists(): Observable<MutableList<PlayList>> {
+    override fun playLists(): Observable<List<PlayList>> {
         return Observable.create { subscriber ->
-            val playLists = mLiteOrm?.query<PlayList>(PlayList::class.java)
-            if (playLists != null) {
-                    // First query, create the default play list
-                    val playList = mContext?.let { DBUtils.generateFavoritePlayList(it) }
-                    val result = mLiteOrm?.save(playList)
-                    Log.d(TAG, "Create default playlist(Favorite) with " + if (result == 1L) "success" else "failure")
-                    playLists.add(playList)
+            val playLists = mLiteOrm!!.query(PlayList::class.java)
+            if (playLists.isEmpty()) {
+                // First query, create the default play list
+                val playList = DBUtils.generateFavoritePlayList(mContext)
+                val result = mLiteOrm.save(playList)
+                Log.d(TAG, "Create default playlist(Favorite) with " + if (result == 1L) "success" else "failure")
+                playLists.add(playList)
             }
             subscriber.onNext(playLists)
             subscriber.onCompleted()
@@ -39,9 +32,13 @@ import java.util.Date
     }
 
     //i messed with this
-    override fun cachedPlayLists(): MutableList<PlayList> {
-        var playLists = mLiteOrm?.query<PlayList>(PlayList::class.java)
-        return playLists!!
+//    override fun cachedPlayLists(): MutableList<PlayList> {
+//        var playLists = mLiteOrm?.query<PlayList>(PlayList::class.java)
+//        return playLists!!
+//    }
+
+    override fun cachedPlayLists(): MutableList<PlayList>? {
+        return null
     }
 
     override fun create(playList: PlayList): Observable<PlayList> {
@@ -52,6 +49,7 @@ import java.util.Date
 
             val result = mLiteOrm?.save(playList)
             if (result!! > 0) {
+                Log.e(TAG, "Create default playlist(Favorite) with " + if (result == 1L) "success" else "failure")
                 subscriber.onNext(playList)
             } else {
                 subscriber.onError(Exception("Create play list failed"))
@@ -63,7 +61,6 @@ import java.util.Date
     override fun update(playList: PlayList): Observable<PlayList> {
         return Observable.create { subscriber ->
             playList.updatedAt = Date()
-
             val result = mLiteOrm?.update(playList)?.toLong()
             if (result!! > 0) {
                 subscriber.onNext(playList)
@@ -87,7 +84,6 @@ import java.util.Date
     }
 
     // Folder
-
     override fun folders(): Observable<MutableList<Folder>> {
         return Observable.create { subscriber ->
             if (PreferenceManager.isFirstQueryFolders(mContext)) {

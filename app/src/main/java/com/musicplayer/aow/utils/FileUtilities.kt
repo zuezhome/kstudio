@@ -2,6 +2,7 @@ package com.musicplayer.aow.utils
 
 import android.media.MediaMetadataRetriever
 import android.text.TextUtils
+import android.util.Log
 
 import com.musicplayer.aow.data.model.Folder
 import com.musicplayer.aow.data.model.Song
@@ -82,12 +83,12 @@ object FileUtilities {
         if (keyDuration == null || !keyDuration.matches("\\d+".toRegex())) return null
         duration = Integer.parseInt(keyDuration)
 
-        val title = extractMetadata(metadataRetriever, MediaMetadataRetriever.METADATA_KEY_TITLE, file.name)
-        val displayName = extractMetadata(metadataRetriever, MediaMetadataRetriever.METADATA_KEY_TITLE, file.name)
-        val artist = extractMetadata(metadataRetriever, MediaMetadataRetriever.METADATA_KEY_ARTIST, UNKNOWN)
-        val album = extractMetadata(metadataRetriever, MediaMetadataRetriever.METADATA_KEY_ALBUM, UNKNOWN)
+        val title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+        val displayName = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+        val artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+        val album = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
 
-        val song = Song()
+        var song = Song()
         song.title = title
         song.displayName = displayName
         song.artist = artist

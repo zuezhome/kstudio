@@ -18,7 +18,7 @@ import java.util.ArrayList
  */
 class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener {
 
-    private var mPlayer: MediaPlayer? = null
+    var mPlayer: MediaPlayer? = null
 
     private var mPlayList: PlayList? = null
     // Default size 2: for service and UI
@@ -28,7 +28,7 @@ class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener
     private var isPaused: Boolean = false
 
     override val isPlaying: Boolean
-        get() = mPlayer!!.isPlaying
+        get() = if (mPlayer != null){mPlayer!!.isPlaying}else{ false }
 
     override val progress: Int
         get() = mPlayer!!.currentPosition
@@ -52,12 +52,15 @@ class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener
 
     override fun play(): Boolean {
         if (isPaused) {
-            mPlayer!!.start()
-            notifyPlayStatusChanged(true)
-            return true
+            if (mPlayer != null) {
+                mPlayer!!.start()
+                notifyPlayStatusChanged(true)
+                return true
+            }
         }
         if (mPlayList!!.prepare()) {
             val song = mPlayList!!.currentSong
+            mPlayList!!.currentSong.numberOfPlay += 1
             try {
                 mPlayer!!.reset()
                 mPlayer!!.setDataSource(song.path)
@@ -115,7 +118,7 @@ class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener
 
     override fun playNext(): Boolean {
         isPaused = false
-        val hasNext = mPlayList!!.hasNext(false)
+        val hasNext = mPlayList!!.hasNext(true)
         if (hasNext) {
             val next = mPlayList!!.next()
             play()
@@ -148,6 +151,10 @@ class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener
             return true
         }
         return false
+    }
+
+    fun getDuration(): Int {
+        return mPlayList!!.currentSong.duration
     }
 
     override fun setPlayMode(playMode: PlayMode) {
@@ -219,6 +226,10 @@ class Player private constructor() : IPlayback, MediaPlayer.OnCompletionListener
         for (callback in mCallbacks) {
             callback.onComplete(song)
         }
+    }
+
+    fun setVolume(leftVolume: Float, rightVolume: Float){
+        mPlayer!!.setVolume(leftVolume, rightVolume)
     }
 
     companion object {

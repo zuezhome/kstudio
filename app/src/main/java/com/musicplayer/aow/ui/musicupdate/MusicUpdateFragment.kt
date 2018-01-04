@@ -44,12 +44,12 @@ class MusicUpdateFragment : BaseFragment(){
     }
 
     fun createDummyData() {
-        for (i in 1..20) {
+        for (i in 1..4) {
             val dm = SectionDataModel()
-            dm.headerTitle = "Music" + i
+            dm.headerTitle = "Section " + i
             val singleItem = ArrayList<SingleItemModel>()
-            for (j in 0..20) {
-                singleItem.add(SingleItemModel("Item " + j, "URL " + j))
+            for (j in 0..8) {
+                singleItem.add(SingleItemModel("Song Name " + j, "URL " + j))
             }
             dm.allItemsInSection = singleItem
             allSampleData?.add(dm)

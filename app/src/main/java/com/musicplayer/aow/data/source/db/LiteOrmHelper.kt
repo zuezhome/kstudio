@@ -13,7 +13,7 @@ import com.musicplayer.aow.Injection
  */
 object LiteOrmHelper {
 
-    private val DB_NAME = "kingszplayer.db"
+    private val DB_NAME = "db.db"
 
     @Volatile private var sInstance: LiteOrm? = null
 

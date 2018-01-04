@@ -18,13 +18,6 @@ import java.util.ArrayList
 import java.util.Date
 import java.util.Random
 
-/**
- * Created with Android Studio.
- * User: ryan.hoo.j@gmail.com.musicpalyer.com.musicplayer.aow
- * Date: 9/2/16
- * Time: 4:01 PM
- * Desc: Song
- */
 @Table("songs")
 class Songs : Parcelable {
 
@@ -89,11 +82,11 @@ class Songs : Parcelable {
     }
 
     fun setSongs(songs: MutableList<Song>?) {
-        var songs = songs
-        if (songs == null) {
-            songs = ArrayList()
+        var nSongs = songs
+        if (nSongs == null) {
+            nSongs = ArrayList()
         }
-        this.songs = songs
+        this.songs = nSongs
     }
 
     // Parcelable
@@ -155,7 +148,7 @@ class Songs : Parcelable {
 
         val index = songs!!.indexOf(song)
         if (index != -1) {
-            if (songs!!.removeAt(index) != null) {
+            if (true) {
                 numOfSongs = songs!!.size
                 return true
             }
@@ -190,7 +183,7 @@ class Songs : Parcelable {
 
     fun last(): Song {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE, PlayMode.default -> {
                 var newIndex = playingIndex - 1
                 if (newIndex < 0) {
                     newIndex = songs!!.size - 1
@@ -198,6 +191,7 @@ class Songs : Parcelable {
                 playingIndex = newIndex
             }
             PlayMode.SHUFFLE -> playingIndex = randomPlayIndex()
+            null -> TODO()
         }
         return songs!![playingIndex]
     }
@@ -231,7 +225,7 @@ class Songs : Parcelable {
      */
     operator fun next(): Song {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE, PlayMode.default -> {
                 var newIndex = playingIndex + 1
                 if (newIndex >= songs!!.size) {
                     newIndex = 0

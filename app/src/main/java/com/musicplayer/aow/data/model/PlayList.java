@@ -36,7 +36,7 @@ public class PlayList implements Parcelable {
 
     private int numOfSongs;
 
-    @Column(COLUMN_FAVORITE)
+//    @Column(COLUMN_FAVORITE)
     private boolean favorite;
 
     private Date createdAt;
@@ -45,7 +45,7 @@ public class PlayList implements Parcelable {
 
     @MapCollection(ArrayList.class)
     @Mapping(Relation.OneToMany)
-    private List<Song> songs = new ArrayList<>();
+    public List<Song> songs = new ArrayList<>();
 
     @Ignore
     private int playingIndex = -1;
@@ -66,6 +66,13 @@ public class PlayList implements Parcelable {
 
     public PlayList(List songList) {
         songs.addAll(songList);
+        numOfSongs = songList.size();
+    }
+
+    public PlayList(List songList, String name) {
+        this.setName(name);
+        songs.addAll(songList);
+        numOfSongs = songList.size();
     }
 
     public PlayList(Parcel in) {
@@ -133,6 +140,7 @@ public class PlayList implements Parcelable {
             songs = new ArrayList<>();
         }
         this.songs = songs;
+        numOfSongs = songs.size();
     }
 
     public int getPlayingIndex() {
@@ -307,7 +315,6 @@ public class PlayList implements Parcelable {
      * has a next song to play, for this condition, it returns true.
      */
     public boolean hasNext(boolean fromComplete) {
-        Log.d("Has_Next_Called", playMode.toString());
         if (songs.isEmpty()) return false;
         if (fromComplete) {
             if (playMode == PlayMode.LIST && playingIndex + 1 >= songs.size()) return false;

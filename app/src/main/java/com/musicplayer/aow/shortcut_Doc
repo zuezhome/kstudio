@@ -58,3 +58,35 @@ dependencies {
     compile 'com.github.matthiasrobbers:shortbread:1.0.2'
     annotationProcessor 'com.github.matthiasrobbers:shortbread-compiler:1.0.2'
 }
+
+
+
+
+
+<!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/action_button_size"-->
+        <!--android:src="@android:drawable/stat_sys_headset"-->
+        <!--app:layout_anchor="@id/toolbar"-->
+        <!--app:layout_anchorGravity="bottom|end" />-->
+
+
+
+SERVICE
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            Intent intent = new Intent(MainActivity.this, MyService.class);
+            startService(intent);
+
+        }
+
+        @Override
+        protected void onStop() {
+            super.onStop();
+            Intent intent = new Intent(MainActivity.this, MyService.class);
+            stopService(intent);
+        }

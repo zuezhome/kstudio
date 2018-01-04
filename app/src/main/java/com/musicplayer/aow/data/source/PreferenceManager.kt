@@ -4,13 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.musicplayer.aow.player.PlayMode
 
-/**
- * Created with Android Studio.
- * User:
- * Date:
- * Time:
- * Desc: AppContract
- */
+
 object PreferenceManager {
 
     private val PREFS_NAME = "config.xml"
@@ -56,7 +50,7 @@ object PreferenceManager {
         val playModeName = preferences(context).getString(KEY_PLAY_MODE, null)
         return if (playModeName != null) {
             PlayMode.valueOf(playModeName)
-        } else PlayMode.default
+        } else PlayMode.LOOP
     }
 
     /**

@@ -9,6 +9,18 @@ import android.graphics.BitmapFactory
 import android.content.ContentUris
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
+import android.support.v4.content.CursorLoader
+import android.support.v4.content.Loader
+import android.util.Log
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
+import rx.functions.Func1
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
+import java.util.*
 
 
 /**
@@ -27,10 +39,8 @@ class CursorDB {
             MediaStore.Audio.Media.MIME_TYPE,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.ALBUM,
-            MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.IS_RINGTONE,
             MediaStore.Audio.Media.IS_MUSIC,
-            MediaStore.Audio.Media.IS_NOTIFICATION,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.SIZE)
 
@@ -43,17 +53,17 @@ class CursorDB {
                 ORDER_BY);
     }
 
-    fun cursorToMusic(context: Context,cursor: Cursor, indexPosition: Int): Song {
+    fun cursorToMusic(cursor: Cursor, indexPosition: Int): Song {
         val realPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
         val songFile = File(realPath)
         var song: Song?
-        if (songFile.exists()) {
-            // Using song parsed from file to avoid encoding problems
-            song = FileUtilities.fileToMusic(songFile)
-            if (song != null) {
-                return song
-            }
-        }
+//        if (songFile.exists()) {
+//            // Using song parsed from file to avoid encoding problems
+//            song = FileUtilities.fileToMusic(songFile)
+//            if (song != null) {
+//                return song
+//            }
+//        }
         song = Song()
         song.id = indexPosition
         song!!.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
@@ -62,33 +72,22 @@ class CursorDB {
             displayName = displayName.substring(0, displayName.length - 4)
         }
         song!!.displayName = displayName
+        if (song!!.displayName == null){
+            song!!.displayName = "Unknown"
+        }
         song!!.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+        if (song!!.artist == null){
+            song!!.artist = "Unknown"
+        }
         song!!.album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM))
-        if (song!!.album.isNullOrEmpty()){
+        if (song!!.album == null){
             song!!.album = "Unknown"
         }
-        song!!.path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+        song!!.path = realPath
         song!!.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
         song!!.size = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE))
 
         return song
-    }
-
-    fun getAlbumart(context: Context, album_id: Long?): Bitmap? {
-        var bm: Bitmap? = null
-        try {
-            val sArtworkUri = Uri
-                    .parse("content://media/external/audio/albumart")
-            val uri = ContentUris.withAppendedId(sArtworkUri, album_id!!)
-            val pfd = context.getContentResolver()
-                    .openFileDescriptor(uri, "r")
-            if (pfd != null) {
-                val fd = pfd!!.getFileDescriptor()
-                bm = BitmapFactory.decodeFileDescriptor(fd)
-            }
-        } catch (e: Exception) {
-        }
-        return bm
     }
 
 }

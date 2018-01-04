@@ -79,25 +79,32 @@ class ShadowImageView : ImageView {
     }
 
     // Animation
-
     fun startRotateAnimation() {
-        mRotateAnimator!!.cancel()
-        mRotateAnimator!!.start()
+        if (mRotateAnimator != null) {
+            mRotateAnimator!!.cancel()
+            mRotateAnimator!!.start()
+        }
     }
 
     fun cancelRotateAnimation() {
-        mLastAnimationValue = 0
-        mRotateAnimator!!.cancel()
+        if(mRotateAnimator != null) {
+            mLastAnimationValue = 0
+            mRotateAnimator!!.cancel()
+        }
     }
 
     fun pauseRotateAnimation() {
-        mLastAnimationValue = mRotateAnimator!!.currentPlayTime
-        mRotateAnimator!!.cancel()
+        if (mRotateAnimator != null) {
+            mLastAnimationValue = mRotateAnimator!!.currentPlayTime
+            mRotateAnimator!!.cancel()
+        }
     }
 
     fun resumeRotateAnimation() {
-        mRotateAnimator!!.start()
-        mRotateAnimator!!.currentPlayTime = mLastAnimationValue
+        if(mRotateAnimator != null) {
+            mRotateAnimator!!.start()
+            mRotateAnimator!!.currentPlayTime = mLastAnimationValue
+        }
     }
 
     override fun onDetachedFromWindow() {
@@ -152,6 +159,6 @@ class ShadowImageView : ImageView {
         private val SHADOW_RADIUS = 24f
         private val SHADOW_ELEVATION = 16
 
-        private val DEFAULT_BACKGROUND_COLOR = -0xc388a0
+        private val DEFAULT_BACKGROUND_COLOR = -0xc3a088
     }
 }

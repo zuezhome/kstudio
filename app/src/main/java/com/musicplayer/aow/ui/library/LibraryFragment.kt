@@ -1,8 +1,11 @@
 package com.musicplayer.aow.ui.library
 
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.net.Uri
+import android.support.annotation.ColorRes
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
@@ -31,15 +34,17 @@ class LibraryFragment : BaseFragment(),
         return inflater!!.inflate(R.layout.fragment_library, container, false)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view!!)
 
         tablayout = view.findViewById(R.id.library_tablayout) as TabLayout
-        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_songs))
-        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_album))
-        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_artist))
-        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_playlist))
+        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_songs).setText("Songs"))
+        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_album).setText("Album"))
+        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_artist).setText("Artist"))
+        tablayout!!.addTab(tablayout!!.newTab().setIcon(R.drawable.library_playlist).setText("Playlist"))
+        tablayout!!.setTabTextColors(ColorStateList.valueOf(R.color.blue).withAlpha(100))
         tablayout!!.setTabGravity(TabLayout.GRAVITY_FILL)
 
         viewPager = view.findViewById(R.id.library_view_pager) as ViewPager

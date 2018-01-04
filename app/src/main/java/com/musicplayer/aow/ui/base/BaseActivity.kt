@@ -95,7 +95,7 @@ abstract class BaseActivity : AppCompatActivity() {
         mSubscriptions!!.add(subscription)
     }
 
-    protected fun subscribeEvents(): Subscription? {
+    protected open fun subscribeEvents(): Subscription? {
         return null
     }
 }

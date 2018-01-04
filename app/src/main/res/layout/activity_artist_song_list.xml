@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.library.activities.ArtistSongs"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/gradient_skyline">
+
+        <LinearLayout
+            android:id="@+id/toolbar_layer"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent"
+            android:elevation="20dp">
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/toolbar_artist_song_list"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_arrow_back_black"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="center"/>
+            <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar_album_song_list"-->
+            <!--xmlns:toolbar="http://schemas.android.com/apk/res-auto"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?android:attr/actionBarSize"-->
+            <!--toolbar:titleTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"-->
+            <!--toolbar:navigationIcon="@drawable/ic_arrow_back_black"/>-->
+        </LinearLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="180dp"
+            tools:layout_editor_absoluteY="0dp" android:orientation="vertical">
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/toolbar_artist_song_list"-->
+                <!--xmlns:toolbar="http://schemas.android.com/apk/res-auto"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?android:attr/actionBarSize"-->
+                <!--toolbar:titleTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--toolbar:navigationIcon="@drawable/ic_arrow_back_black"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/artist_art"
+                android:background="@color/transparent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical">
+
+                <android.support.design.widget.CoordinatorLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp">
+                    <ImageView
+                        android:id="@+id/image_view_artist_art"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="..."
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/vinyl_blue"
+                        android:background="@drawable/splashscreen_bg"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent"></RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_marginTop="60dp"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:id="@+id/image_view_artist_art_main"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/vinyl_blue"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginTop="5dp"
+                            />
+                        <TextView
+                            android:id="@+id/image_view_artist_name_main"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="18sp"
+                            android:text="Album Name"
+                            android:textColor="@color/white"
+                            android:layout_below="@id/image_view_artist_art_main"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:shadowColor="@color/black"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="3"/>
+                    </LinearLayout>
+                </android.support.design.widget.CoordinatorLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    xmlns:recyclerView="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/artist_songs_recycler_views"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="@dimen/mp.padding.large"
+                    android:clipToPadding="false"
+                    recyclerView:layoutManager="@string/mp.list.layoutManager.linear"
+                    tools:listitem="@layout/item_local_music"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_play_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_media_play"
+                app:layout_anchor="@id/image_view_artist_art"
+                app:layout_anchorGravity="bottom|end" />
+
+
+        </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

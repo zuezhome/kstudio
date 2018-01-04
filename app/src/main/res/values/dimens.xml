@@ -23,6 +23,7 @@
 
     <dimen name="mp.toolbar.paddingTop">0dp</dimen>
 
+    <!--<dimen name="mp.material.marginLeft">72dp</dimen>-->
     <dimen name="mp.material.marginLeft">72dp</dimen>
 
     <dimen name="mp.list.itemHeight">54dp</dimen>
@@ -36,5 +37,11 @@
 
     <!-- CharacterView -->
     <dimen name="mp.characterView.padding">6dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">186dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

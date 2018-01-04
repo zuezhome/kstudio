@@ -1,5 +1,6 @@
 package com.musicplayer.aow.data.source
 
+import android.util.Log
 import com.musicplayer.aow.Injection
 import com.musicplayer.aow.data.model.*
 import com.musicplayer.aow.data.source.db.LiteOrmHelper
@@ -8,21 +9,18 @@ import rx.functions.Action1
 
 import java.util.ArrayList
 
-class AppRepository private constructor() : AppContract {
+class AppRepository () : AppContract {
 
-    private val mLocalDataSource: AppLocalDataSource
+    private val mLocalDataSource: AppLocalDataSource = AppLocalDataSource(Injection.provideContext(), LiteOrmHelper.instance)
 
     private var mCachedPlayLists: List<PlayList>? = null
 
-    init {
-        mLocalDataSource = AppLocalDataSource(Injection.provideContext(), LiteOrmHelper.instance)
-    }
-
     // Play List
-    override fun playLists(): Observable<MutableList<PlayList>> {
+    override fun playLists(): Observable<List<PlayList>> {
         return mLocalDataSource.playLists()
                 .doOnNext { playLists -> mCachedPlayLists = playLists }
     }
+
 
     override fun cachedPlayLists(): MutableList<PlayList> {
         return if (mCachedPlayLists == null) {

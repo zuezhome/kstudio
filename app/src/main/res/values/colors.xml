@@ -1,86 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="status_bar_color">#FF000000</color>
+    <color name="layout_border_color">#FF111111</color>
     <!-- Common -->
-    <color name="transparent">#00000000</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="translusent">#11000000</color>
+    <color name="green">#FF00DD00</color>
+    <color name="green.dark">#1ea167</color>
+    <color name="blue">#FF3498db</color>
+    <color name="red">#FFDD0000</color>
+    <color name="red_light">#FFEE1111</color>
+    <color name="yellow">#f6ba35</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_trans">#7AFFFFFF</color>
+    <color name="grey">#EEEEEE</color>
     <color name="black">#000000</color>
 
+
     <!-- Theme - Dark Blue -->
-    <color name="mp.theme.dark_blue.background">#3C785F</color>
-    <color name="mp.theme.dark_blue.gradientColor">#509F7E</color>
-    <color name="mp.theme.dark_blue.colorControlActivated">#7AFFFFFF</color>
-    <color name="mp.theme.dark_blue.colorControlHighlight">#7AFFFFFF</color>
+    <!--<color name="mp.theme.dark_blue.background">#3C785F</color>-->
+    <color name="mp.theme.dark_blue.background">@color/white</color>
+    <color name="mp.theme.dark_blue.gradientColor">@color/white</color>
+    <color name="mp.theme.dark_blue.colorControlActivated">@color/white_trans</color>
+    <color name="mp.theme.dark_blue.colorControlHighlight">@color/white_trans</color>
 
-    <color name="mp.theme.dark_blue.colorPrimary">#3C785F</color>
-    <color name="mp.theme.dark_blue.colorPrimaryDark">#3C785F</color>
-    <color name="mp.theme.dark_blue.colorAccent">#DDF9FF</color>
-    <color name="mp.theme.dark_blue.textColorPrimary">#DDF9FF</color>
-    <color name="mp.theme.dark_blue.textColorSecondary">#ffffff</color>
+    <color name="mp.theme.dark_blue.colorPrimary">@color/white</color>
+    <color name="mp.theme.dark_blue.colorPrimaryDark">@color/white</color>
+    <color name="mp.theme.dark_blue.toolBar.colorAccent">@color/white</color>
+    <color name="mp.theme.dark_blue.colorAccent">@color/red</color>
+    <color name="mp.theme.dark_blue.textColorPrimary">@color/white</color>
+    <color name="mp.theme.dark_blue.textColorSecondary">@color/white</color>
 
-    <color name="mp.theme.dark_blue.actionMode.statusBarColor">#9CCCBD</color>
-    <color name="mp.theme.dark_blue.actionMode.background">#9CCCBD</color>
+    <color name="mp.theme.dark_blue.actionMode.statusBarColor">@color/black</color>
+    <color name="mp.theme.dark_blue.actionMode.background">@color/black</color>
 
-    <color name="mp.line">#3DDDF9FF</color>
-    <color name="mp.list.background">#1ADDF9FF</color>
-    <color name="mp.list.background.selected">#6CDDF9FF</color>
-    <color name="mp.list.scrollThumb">#99DDF9FF</color>
-    <color name="mp.list.text.title">#DDF9FF</color>
-    <color name="mp.list.text.title.selected">#3C785F</color>
-    <color name="mp.list.text.hint">#ffffff</color>
-    <color name="mp.list.text.hint.selected">#ffffff</color>
+    <color name="mp.line">#3D000000</color>
+    <!--<color name="mp.list.background">#1ADD0900</color>-->
+    <color name="mp.list.background">@color/transparent</color>
+    <color name="mp.list.background.selected">#6CDD0900</color>
+    <color name="mp.list.scrollThumb">#99DD0900</color>
+    <color name="mp.list.text.title">#DD0900</color>
+    <color name="mp.list.text.title.selected">#3C5078</color>
+    <color name="mp.list.text.hint">@color/white</color>
+    <color name="mp.list.text.hint.selected">@color/white</color>
 
-    <color name="mp.popupMenu.background">#B4E0D2</color>
+    <color name="mp.popupMenu.background">#cccccc</color>
 
-    <color name="mp.text.hint">#9CCCBD</color>
+    <color name="mp.text.hint">@color/blue</color>
 
     <!-- Segmented Control -->
     <color name="mp.widget.segmented.default">?attr/colorAccent</color>
-    <color name="mp.widget.segmented.checked">#3C785F</color>
+    <color name="mp.widget.segmented.checked">#3C5F78</color>
 
     <!-- CharacterView -->
-    <color name="mp.characterView.background">#9CCCBD</color>
+    <color name="mp.characterView.background">#9CBDCC</color>
     <color name="mp.characterView.textColor">@color/mp.list.text.title</color>
-
-    <!--&lt;!&ndash; Common &ndash;&gt;-->
-    <!--<color name="transparent">#00000000</color>-->
-    <!--<color name="white">#FFFFFF</color>-->
-    <!--<color name="black">#CC000000</color>-->
-
-    <!--&lt;!&ndash; Theme - Dark Blue &ndash;&gt;-->
-    <!--<color name="mp.theme.dark_blue.background">#FFFFFF</color>-->
-    <!--<color name="mp.theme.dark_blue.gradientColor">#FFFFFFFF</color>-->
-    <!--&lt;!&ndash; &ndash;&gt;-->
-    <!--<color name="mp.theme.dark_blue.colorControlActivated">#CC000000</color>-->
-    <!--<color name="mp.theme.dark_blue.colorControlHighlight">#AACCCCCC</color>-->
-
-    <!--<color name="mp.theme.dark_blue.colorPrimary">#ffffff</color>-->
-    <!--<color name="mp.theme.dark_blue.colorPrimaryDark">#ffffff</color>-->
-    <!--<color name="mp.theme.dark_blue.colorAccent">#CC000000</color>-->
-    <!--<color name="mp.theme.dark_blue.textColorPrimary">#CC000000</color>-->
-    <!--<color name="mp.theme.dark_blue.textColorSecondary">#ffffff</color>-->
-
-    <!--<color name="mp.theme.dark_blue.actionMode.statusBarColor">#CC000000</color>-->
-    <!--<color name="mp.theme.dark_blue.actionMode.background">#ffffff</color>-->
-
-    <!--<color name="mp.line">#1A000000</color>-->
-    <!--<color name="mp.list.background">#1Affffff</color>-->
-    <!--<color name="mp.list.background.selected">#cccccccc</color>-->
-    <!--<color name="mp.list.scrollThumb">#CC00ccff</color>-->
-    <!--<color name="mp.list.text.title">#CCffffff</color>-->
-    <!--<color name="mp.list.text.title.selected">#ffffff</color>-->
-    <!--<color name="mp.list.text.hint">#CC000000</color>-->
-    <!--<color name="mp.list.text.hint.selected">#7C000000</color>-->
-
-    <!--<color name="mp.popupMenu.background">#CC000000</color>-->
-
-    <!--<color name="mp.text.hint">#FFFFFF</color>-->
-
-    <!--&lt;!&ndash; Segmented Control &ndash;&gt;-->
-    <!--<color name="mp.widget.segmented.default">?attr/colorAccent</color>-->
-    <!--<color name="mp.widget.segmented.checked">#CC000000</color>-->
-
-    <!--&lt;!&ndash; CharacterView &ndash;&gt;-->
-    <!--<color name="mp.characterView.background">#CC11cc11</color>-->
-    <!--<color name="mp.characterView.textColor">@color/mp.list.text.title</color>-->
-    <!--<color name="colorAccent">#CC000000</color>-->
 </resources>

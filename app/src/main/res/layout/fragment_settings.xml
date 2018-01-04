@@ -6,7 +6,10 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     android:scrollbars="none"
-    tools:context="com.musicplayer.aow.ui.settings.SettingsFragment">
+    tools:context="com.musicplayer.aow.ui.settings.SettingsFragment"
+    android:background="@color/white">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,7 +26,7 @@
                 android:background="@color/transparent"
                 android:textSize="12dp"
                 android:textStyle="bold"
-                android:textColor="#DDF9DD"
+                android:textColor="@color/red"
                 android:text="Search for local audio files:"/>
 
             <android.support.v7.widget.CardView
@@ -43,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:background="#9CCCBD">
+                    android:background="#BD9CCC">
                     <TextView
                         android:id="@+id/search_label"
                         android:layout_width="wrap_content"
@@ -61,8 +64,8 @@
                         android:layout_marginTop="0dp"
                         android:layout_alignParentRight="true"
                         android:text="search"
-                        android:textColor="@color/black"
-                        android:background="@drawable/pop_up_gb"/>
+                        android:textColor="@color/white"
+                        android:background="@drawable/pop_up_gb_red"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -78,7 +81,7 @@
                 android:background="@color/transparent"
                 android:textSize="12dp"
                 android:textStyle="bold"
-                android:textColor="#DDF9DD"
+                android:textColor="@color/red"
                 android:text="Gesture control settings:"/>
 
             <android.support.v7.widget.CardView
@@ -91,20 +94,20 @@
                 android:layout_below="@+id/gesture_settings_label"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="1dp"
-                android:background="#9CCCBD"
+                android:background="#BD9CCC"
                 card_view:cardUseCompatPadding="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#9CCCBD">
+                    android:background="#BD9CCC">
                     <RelativeLayout
                         android:id="@+id/shake_section"
                         android:layout_marginBottom="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp"
-                        android:background="#9CCCBD">
+                        android:background="#BD9CCC">
                             <TextView
                                 android:id="@+id/shake"
                                 android:layout_width="wrap_content"
@@ -130,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp"
-                        android:background="#9CCCBD">
+                        android:background="#BD9CCC">
                         <TextView
                             android:id="@+id/flip"
                             android:layout_width="wrap_content"
@@ -153,6 +156,42 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                >
+                <Button
+                    android:id="@+id/wifi_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="send data on wifi"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/pop_up_gb_red"/>
+                <Button
+                    android:id="@+id/scheduler_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentRight="true"
+                    android:text="set scheduler"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/pop_up_gb_red"/>
+                <Button
+                    android:id="@+id/bluetooth_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentRight="true"
+                    android:text="Bluetooth"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/pop_up_gb_red"/>
+            </LinearLayout>
 
 
 
@@ -167,13 +206,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 card_view:cardUseCompatPadding="true"
-                tools:ignore="UnknownId">
+                tools:ignore="UnknownId"
+                android:visibility="invisible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:background="#9CCCBD">
+                    android:background="#BD9CCC">
 
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
@@ -267,8 +307,16 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-
-
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4728638624800158/8986206767">
+            </com.google.android.gms.ads.AdView>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

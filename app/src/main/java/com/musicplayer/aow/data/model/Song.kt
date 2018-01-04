@@ -31,6 +31,8 @@ class Song : Parcelable {
 
     var isFavorite: Boolean = false
 
+    var numberOfPlay: Int = 0
+
     var albumArt: String? = null
 
     constructor() {
@@ -70,7 +72,7 @@ class Song : Parcelable {
     }
 
     override fun toString(): String {
-        return "Song(id=$id, title=$title, displayName=$displayName, artist=$artist, album=$album, path=$path, duration=$duration, size=$size, isFavorite=$isFavorite, albumArt=$albumArt)"
+        return "Song(id=$id, title=$title, displayName=$displayName, artist=$artist, album=$album, path=$path, duration=$duration, size=$size, isFavorite=$isFavorite, numberOfPlay=$numberOfPlay albumArt=$albumArt)"
     }
 
 

@@ -10,6 +10,9 @@ import com.musicplayer.aow.R
 import com.musicplayer.aow.data.model.Song
 
 import java.io.File
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.R.attr.bitmap
 
 object AlbumUtils {
 
@@ -24,20 +27,71 @@ object AlbumUtils {
     }
 
     fun parseAlbum(file: File): Bitmap? {
-        val metadataRetriever = MediaMetadataRetriever()
-        try {
-            metadataRetriever.setDataSource(file.absolutePath)
-            val albumData = metadataRetriever.embeddedPicture
-            if (albumData != null) {
-//                return decodeByteArray(albumData, 0, albumData.size)
-                return null
-            } else {
-                return null
-            }
-        } catch (e: IllegalArgumentException) {
-            return null
+        return null
+    }
+
+    fun getResizedBitmap(img: ByteArray, maxSize: Int): Bitmap {
+        val options = BitmapFactory.Options()
+        var image = BitmapFactory.decodeByteArray(img, 1, maxSize, options)
+        var width = image.width
+        var height = image.height
+
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
+    }
+
+
+    fun decodeSampledBitmapFromResource(res: File, reqWidth: Int, reqHeight: Int): Bitmap? {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        var firstBitmap  = BitmapFactory.decodeFile(res.absolutePath, options)
+//        BitmapFactory.decodeResource(res, resId, options)
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false
+
+        var secondBitmap = BitmapFactory.decodeFile(res.absolutePath,options)
+        return if (secondBitmap == null){
+            return firstBitmap
+        }else{
+            return secondBitmap
         }
     }
+
+    fun calculateInSampleSize(
+            options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        // Raw height and width of image
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+
+            val halfHeight = height / 2
+            val halfWidth = width / 2
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+
+        return inSampleSize
+    }
+
 
     fun getCroppedBitmap(bitmap: Bitmap): Bitmap {
         val output = Bitmap.createBitmap(bitmap.width,

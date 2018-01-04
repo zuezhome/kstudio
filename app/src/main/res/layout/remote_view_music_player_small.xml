@@ -6,7 +6,7 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="#ffffff"
+    android:background="@color/red"
     tools:layout_height="60dp"
     >
 
@@ -18,7 +18,7 @@
         android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_music_player"
+        android:src="@drawable/ic_music_player_1"
         />
 
     <FrameLayout
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:singleLine="true"
             tools:text="Saycet"
@@ -67,7 +67,7 @@
             android:id="@+id/text_view_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#AB000000"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:singleLine="true"
             tools:text="Through the window"

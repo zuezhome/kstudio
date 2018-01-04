@@ -9,9 +9,9 @@
         android:id="@+id/album_recycler_views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/mp.padding.large"
+        android:padding="@dimen/mp.padding.large"
         android:clipToPadding="false"
-        android:background="@color/transparent"
+        android:background="@color/grey"
         />
 
 </RelativeLayout>

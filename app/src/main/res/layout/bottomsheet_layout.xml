@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:gravity="center_horizontal"
+    android:background="@color/white"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="50dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    android:elevation="40dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mp.list.background">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/image_view_file_peep"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/vinyl_blue"
+                android:background="@color/white"
+                />
+        </android.support.design.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet_open_music"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/equalizer_view_peep"
+            android:layout_toStartOf="@+id/equalizer_view_peep"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginRight="@dimen/mp.margin.normal"
+            android:layout_marginEnd="@dimen/mp.margin.normal"
+            >
+
+            <TextView
+                style="@style/MP.Theme.TextAppearance.List.Title"
+                android:id="@+id/text_view_name_peep"
+                tools:text="A little bit longer"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    style="@style/MP.Theme.TextAppearance.List.Hint"
+                    android:id="@+id/text_view_artist_peep"
+                    android:layout_marginTop="@dimen/mp.margin.small"
+                    tools:text="A little bit longer"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <es.claucookie.miniequalizerlibrary.EqualizerView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/equalizer_view_peep"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            custom:foregroundColor="@color/red"
+            custom:animDuration="3500"/>
+
+    </RelativeLayout>
+</LinearLayout>

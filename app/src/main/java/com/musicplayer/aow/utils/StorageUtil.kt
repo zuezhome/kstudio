@@ -11,23 +11,26 @@ import android.util.Log
 import java.io.*
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
-
-
+import com.musicplayer.aow.Injection
+import com.musicplayer.aow.utils.AlbumUtils.decodeSampledBitmapFromResource
 
 
 class StorageUtil(context: Context) {
 
     var applicationFoldercontext = "com.musicplayer.aow"
 
-    var context = context
+    var context = Injection.provideContext()!!
 
-    private val STORAGE = "com.musicplayer.aow.STORAGE"
+    val STORAGE = "com.musicplayer.aow.STORAGE"
     private var preferences: SharedPreferences? = null
 
 
+    fun appPreference(): SharedPreferences? {
+        return context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+    }
 
-    fun storeAudio(arrayList: ArrayList<Song>): Boolean {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+    fun storeAudio(arrayList: ArrayList<Song>?): Boolean {
+        preferences = context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         val editor = preferences!!.edit()
         val gson = Gson()
         val json = gson.toJson(arrayList)
@@ -37,28 +40,26 @@ class StorageUtil(context: Context) {
     }
 
     fun loadAudio(): ArrayList<Song>? {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         val gson = Gson()
         val json = preferences!!.getString("songs", null)
-        val type = object : TypeToken<ArrayList<Song>>() {
-
-        }.type
-        if (json.isNullOrEmpty()) {
-            return ArrayList()
+        val type = object : TypeToken<ArrayList<Song>>() {}.type
+        return if (json.isNullOrEmpty()) {
+            ArrayList()
         }else {
-            return gson.fromJson<ArrayList<Song>>(json, type)
+            gson.fromJson<ArrayList<Song>>(json, type)
         }
     }
 
     fun storeAudioIndex(index: Int) {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = this.context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         val editor = preferences!!.edit()
         editor.putInt("audioIndex", index)
         editor.apply()
     }
 
     fun loadAudioIndex(): Int {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = this.context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         if (preferences != null) {
             return preferences!!.getInt("audioIndex", -1)//return -1 if no data found
         }else{
@@ -67,21 +68,21 @@ class StorageUtil(context: Context) {
     }
 
     fun clearCachedAudioPlaylist() {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = this.context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         val editor = preferences!!.edit()
         editor.clear()
         editor.commit()
     }
 
     fun saveStringValue(name: String, value: String){
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = this.context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         val editor = preferences!!.edit()
         editor.putString(name, value)
         editor.apply()
     }
 
     fun loadStringValue(name: String): String? {
-        preferences = this.context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        preferences = this.context!!.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
         return preferences!!.getString(name, "empty")
     }
 
@@ -91,8 +92,8 @@ class StorageUtil(context: Context) {
             if (!mediaStorageDir.mkdirs()) {
                 Log.e("App", "failed to create directory")
             }else{
-                var folderNames = arrayListOf("/tmpImg", "/update", "/cache/img", "/.media", "/.nomedia",
-                        "/download/lyrics", "/download/audio", "/download/albumart","/items")
+                var folderNames = arrayListOf("/tmpImg", "/update", "/cache/.img", "/.media", "/.nomedia",
+                        "/download/lyrics", "/download/audio", "/download/albumart","/items", "/data")
                 folderNames
                         .asSequence()
                         .map { File(Environment.getExternalStorageDirectory(), applicationFoldercontext + it) }
@@ -103,13 +104,31 @@ class StorageUtil(context: Context) {
     }
 
     fun byteArrayToFile(byteArray: ByteArray, name: String): String? {
-        val file = File(Environment.getExternalStorageDirectory(), applicationFoldercontext + "/cache/img/" + name)
+        val file = File(Environment.getExternalStorageDirectory(), applicationFoldercontext + "/cache/.img/" + name)
         if (!file.exists()) {
             file.createNewFile();
         }
         val fos = FileOutputStream(file)
         fos.write(byteArray)
         fos.close()
+
+        if (file.exists()) {
+            try {
+                var bitmapCrop = decodeSampledBitmapFromResource(file, 100, 100)
+                // make a new bitmap from your file
+//                val bitmapCrop = BitmapFactory.decodeFile(file.absolutePath)
+                if (bitmapCrop != null) {
+                    file.delete()
+                    val fOut = FileOutputStream(file)
+                    bitmapCrop!!.compress(Bitmap.CompressFormat.PNG, 80, fOut)
+                    fOut.flush()
+                    fOut.close()
+                }
+            }catch (e:Exception){
+                Log.e("Bitmap tmp err:",e.message)
+            }
+        }
+
         return file.absolutePath
     }
 

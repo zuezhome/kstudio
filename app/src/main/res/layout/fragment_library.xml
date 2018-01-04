@@ -11,8 +11,10 @@
         android:layout_width="match_parent"
         android:id="@+id/library_tablayout"
         android:theme="@style/MP.Theme"
-        app:tabTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Title"
+        app:tabTextAppearance="@style/MP.Theme.TextAppearance.Light.Toolbar.Label"
+        android:background="@color/white"
         />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/library_view_pager"
         android:layout_below="@+id/library_tablayout"
